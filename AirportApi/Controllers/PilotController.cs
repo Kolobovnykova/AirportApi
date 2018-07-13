@@ -28,5 +28,26 @@ namespace AirportApi.Controllers
         {
             return Json(service.GetById(id));
         }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] PilotDTO item)
+        {
+            service.Add(item);
+            return Ok();
+        }
+
+        [HttpPut("{id})")]
+        public IActionResult Update([FromBody] PilotDTO item)
+        {
+            service.Update(item);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            service.Remove(id);
+            return Ok();
+        }
     }
 }

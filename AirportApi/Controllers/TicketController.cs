@@ -5,24 +5,24 @@ using Shared.DTOs;
 namespace AirportApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/stewardesses")]
-    public class StewardessController : Controller
+    [Route("api/tickets")]
+    public class TicketController : Controller
     {
-        private readonly IService<StewardessDTO> service;
+        private readonly IService<TicketDTO> service;
 
-        public StewardessController(IService<StewardessDTO> service)
+        public TicketController(IService<TicketDTO> service)
         {
             this.service = service;
         }
 
-        //GET: api/stewardesses/
+        //GET: api/tickets/
         [HttpGet]
         public IActionResult Get()
         {
             return Json(service.GetAll());
         }
 
-        //GET: api/stewardesses/id
+        //GET: api/tickets/id
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -30,14 +30,14 @@ namespace AirportApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] StewardessDTO item)
+        public IActionResult Create([FromBody] TicketDTO item)
         {
             service.Add(item);
             return Ok();
         }
 
         [HttpPut("{id})")]
-        public IActionResult Update([FromBody] StewardessDTO item)
+        public IActionResult Update([FromBody] TicketDTO item)
         {
             service.Update(item);
             return Ok();
