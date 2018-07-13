@@ -36,6 +36,36 @@ namespace DAL.Implementation
                 Experience = 3
             });
 
+            Stewardesses.Add(new Stewardess
+            {
+                Id = 1,
+                FirstName = "Maria",
+                LastName = "Petrova",
+                DateOfBirth = new DateTime(1970, 05, 03)
+            });
+
+            Stewardesses.Add(new Stewardess
+            {
+                Id = 2,
+                FirstName = "Anna",
+                LastName = "Ivanova",
+                DateOfBirth = new DateTime(1990, 11, 09)
+            });
+            Stewardesses.Add(new Stewardess
+            {
+                Id = 3,
+                FirstName = "Violetta",
+                LastName = "Sidorova",
+                DateOfBirth = new DateTime(1980, 11, 10)
+            });
+            Stewardesses.Add(new Stewardess
+            {
+                Id = 4,
+                FirstName = "Valeria",
+                LastName = "Kuznetsova",
+                DateOfBirth = new DateTime(1998, 10, 05)
+            });
+
             Crews.Add(new Crew
             {
                 Id = 1,
@@ -58,35 +88,7 @@ namespace DAL.Implementation
                 }
             });
 
-            Stewardesses.Add(new Stewardess
-            {
-                Id = 1,
-                FirstName = "Maria",
-                LastName = "Petrova",
-                DateOfBirth = new DateTime(1970, 05, 03)
-            });
-
-            Stewardesses.Add(new Stewardess
-            {
-                Id = 2,
-                FirstName = "Anna",
-                LastName = "Ivanova",
-                DateOfBirth = new DateTime(1990, 11, 09)
-            });
-            Stewardesses.Add(new Stewardess
-            {
-                Id = 3,
-                FirstName = "Violetta",
-                LastName = "Sidorova",
-                DateOfBirth = new DateTime(1980, 11, 10)
-            }); 
-            Stewardesses.Add(new Stewardess
-            {
-                Id = 4,
-                FirstName = "Valeria",
-                LastName = "Kuznetsova",
-                DateOfBirth = new DateTime(1998, 10, 05)
-            });
+            
         }
 
         public List<TEntity> Set<TEntity>()

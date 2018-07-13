@@ -14,7 +14,7 @@ namespace AirportApi.Controllers
         {
             this.service = service;
         }
-        
+
         //GET: api/crews/
         [HttpGet]
         public IActionResult Get()
@@ -23,14 +23,14 @@ namespace AirportApi.Controllers
         }
 
         //GET: api/crews/id
-        [HttpGet("{id})")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return Json(service.GetById(id));
         }
 
         [HttpPost]
-       // [Route("api/crews/")]
+        // [Route("api/crews/")]
         public IActionResult Create([FromBody] CrewDTO item)
         {
             service.Add(item);
