@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AutoMapper;
 using BLL.Interfaces;
@@ -24,7 +24,7 @@ namespace BLL.Services
 
             if (item == null)
             {
-                throw new Exception($"Flight with id {id} was not found");
+                throw new ValidationException($"Flight with id {id} was not found");
             }
 
             return item;

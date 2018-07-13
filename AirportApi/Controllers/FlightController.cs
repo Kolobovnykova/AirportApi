@@ -1,4 +1,5 @@
-﻿using BLL.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 
@@ -26,28 +27,62 @@ namespace AirportApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Json(service.GetById(id));
+            try
+            {
+                var item = service.GetById(id);
+                return Ok(item);
+            }
+            catch (ValidationException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] FlightDTO item)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             service.Add(item);
-            return Ok();
+            return Ok(item);
         }
 
-        [HttpPut("{id})")]
+        [HttpPut("{id}")]
         public IActionResult Update([FromBody] FlightDTO item)
         {
-            service.Update(item);
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                service.GetById(item.Id);
+                service.Update(item);
+                return Ok(item);
+            }
+            catch (ValidationException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            service.Remove(id);
-            return Ok();
+            try
+            {
+                var item = service.GetById(id);
+                service.Remove(id);
+                return Ok(item);
+            }
+            catch (ValidationException)
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Shared.DTOs
 {
@@ -9,6 +10,6 @@ namespace Shared.DTOs
         public DateTime DateOfDeparture { get; set; }
         public string Destination { get; set; }
         public DateTime DateOfArrival { get; set; }
-        public int[] TicketsId { get; set; }
+        public List<TicketDTO> Tickets { get; set; }
     }
 }
