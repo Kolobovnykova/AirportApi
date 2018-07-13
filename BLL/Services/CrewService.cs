@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AutoMapper;
@@ -21,14 +20,14 @@ namespace BLL.Services
 
         public CrewDTO GetById(int id)
         {
-            var crew = Mapper.Map<Crew, CrewDTO>(unitOfWork.CrewRepository.Get(id).FirstOrDefault());
+            var item = Mapper.Map<Crew, CrewDTO>(unitOfWork.CrewRepository.Get(id).FirstOrDefault());
 
-            if (crew == null)
+            if (item == null)
             {
-                throw new Exception($"Crew with id {id} was not found");
+                throw new ValidationException($"Crew with id {id} was not found");
             }
 
-            return crew;
+            return item;
         }
 
         public List<CrewDTO> GetAll()

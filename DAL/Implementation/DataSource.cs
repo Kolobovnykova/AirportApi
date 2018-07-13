@@ -43,7 +43,6 @@ namespace DAL.Implementation
                 LastName = "Petrova",
                 DateOfBirth = new DateTime(1970, 05, 03)
             });
-
             Stewardesses.Add(new Stewardess
             {
                 Id = 2,
@@ -76,7 +75,6 @@ namespace DAL.Implementation
                     Stewardesses.FirstOrDefault(x => x.Id == 2)
                 }
             });
-            
             Crews.Add(new Crew
             {
                 Id = 2,
@@ -88,7 +86,121 @@ namespace DAL.Implementation
                 }
             });
 
+            Tickets.Add(new Ticket
+            {
+                Id = 1,
+                Flight = null,
+                Price = 38
+            });
+            Tickets.Add(new Ticket
+            {
+                Id = 2,
+                Flight = null,
+                Price = 47
+            });
+            Tickets.Add(new Ticket
+            {
+                Id = 3,
+                Flight = null,
+                Price = 59
+            });
+            Tickets.Add(new Ticket
+            {
+                Id = 4,
+                Flight = null,
+                Price = 35
+            });
+
+            Flights.Add(new Flight
+            {
+                Id = 1,
+                DateOfArrival = new DateTime(2018, 10, 5, 16, 13, 0),
+                DateOfDeparture = new DateTime(2018, 10, 5, 20, 5, 0),
+                Departure = "Heathrow",
+                Destination = "Boryspil",
+                Tickets = new List<Ticket>
+                {
+                    Tickets.FirstOrDefault(x => x.Id == 1),
+                    Tickets.FirstOrDefault(x => x.Id == 2)
+                }
+            });
+
+            Flights.Add(new Flight
+            {
+                Id = 2,
+                DateOfArrival = new DateTime(2018, 10, 5, 4, 5, 0),
+                DateOfDeparture = new DateTime(2018, 10, 5, 6, 5, 0),
+                Departure = "Boryspil",
+                Destination = "Heathrow",
+                Tickets = new List<Ticket>
+                {
+                    Tickets.FirstOrDefault(x => x.Id == 3),
+                    Tickets.FirstOrDefault(x => x.Id == 4)
+                }
+            });
+
+            Tickets[0].Flight = Flights.FirstOrDefault(x => x.Id == 1);
+            Tickets[1].Flight = Flights.FirstOrDefault(x => x.Id == 1);
+            Tickets[2].Flight = Flights.FirstOrDefault(x => x.Id == 2);
+            Tickets[3].Flight = Flights.FirstOrDefault(x => x.Id == 2);
+
+            PlaneTypes.Add(new PlaneType
+                {
+                    Id = 1,
+                    Model = "Type 1",
+                    CarryingCapacity = 1000,
+                    MaxAltitude = 2000,
+                    MaxRange = 10000,
+                    MaxSpeed = 1200,
+                    NumberOfSeats = 100
+                }
+            );
+            PlaneTypes.Add(new PlaneType
+                {
+                    Id = 2,
+                    Model = "Type 2",
+                    CarryingCapacity = 1000,
+                    MaxAltitude = 2000,
+                    MaxRange = 10000,
+                    MaxSpeed = 1200,
+                    NumberOfSeats = 100
+                }
+            );
             
+            Planes.Add(new Plane
+            {
+                Id = 1,
+                DateOfRelease = new DateTime(2017, 10, 9),
+                Lifetime = 14,
+                Name = "Plane 1",
+                PlaneType = PlaneTypes.FirstOrDefault(x => x.Id == 1)
+            });
+            
+            Planes.Add(new Plane
+            {
+                Id = 2,
+                DateOfRelease = new DateTime(2016, 12, 1),
+                Lifetime = 10,
+                Name = "Plane 2",
+                PlaneType = PlaneTypes.FirstOrDefault(x => x.Id == 2)
+            });
+            
+            Departures.Add(new Departure
+            {
+                Id = 1,
+                Crew =  Crews.FirstOrDefault(x => x.Id == 1),
+                Flight = Flights.FirstOrDefault(x => x.Id == 1),
+                DateOfDeparture =  new DateTime(2018, 10, 5, 6, 10, 0),
+                Plane = Planes.FirstOrDefault(x => x.Id == 1)
+            });
+            Departures.Add(new Departure
+            {
+                Id = 2,
+                Crew =  Crews.FirstOrDefault(x => x.Id == 2),
+                Flight = Flights.FirstOrDefault(x => x.Id == 2),
+                DateOfDeparture =  new DateTime(2018, 10, 5, 8, 16, 0),
+                Plane = Planes.FirstOrDefault(x => x.Id == 2)
+            });
         }
 
         public List<TEntity> Set<TEntity>()

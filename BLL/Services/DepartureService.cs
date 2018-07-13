@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AutoMapper;
 using BLL.Interfaces;
@@ -20,15 +20,14 @@ namespace BLL.Services
 
         public DepartureDTO GetById(int id)
         {
-            var departure =
-                Mapper.Map<Departure, DepartureDTO>(unitOfWork.DepartureRepository.Get(id).FirstOrDefault());
+            var item = Mapper.Map<Departure, DepartureDTO>(unitOfWork.DepartureRepository.Get(id).FirstOrDefault());
 
-            if (departure == null)
+            if (item == null)
             {
-                throw new Exception($"Departure with id {id} was not found");
+                throw new ValidationException($"Departure with id {id} was not found");
             }
 
-            return departure;
+            return item;
         }
 
         public List<DepartureDTO> GetAll()
