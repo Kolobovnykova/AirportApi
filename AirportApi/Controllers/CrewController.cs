@@ -17,21 +17,20 @@ namespace AirportApi.Controllers
         
         //GET: api/crews/
         [HttpGet]
-        [Route("api/crews/")]
-        public IActionResult GetAll()
+        public IActionResult Get()
         {
             return Json(service.GetAll());
         }
-        
+
         //GET: api/crews/id
         [HttpGet("{id})")]
-        public IActionResult GetById(int id)
+        public IActionResult Get(int id)
         {
             return Json(service.GetById(id));
         }
 
         [HttpPost]
-        [Route("api/crews/")]
+       // [Route("api/crews/")]
         public IActionResult Create([FromBody] CrewDTO item)
         {
             service.Add(item);

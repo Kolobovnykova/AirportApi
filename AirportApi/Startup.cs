@@ -35,15 +35,6 @@ namespace AirportApi
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDataSource, DataSource>();
-            services.AddScoped<PlaneService>();
-            services.AddScoped<PlaneTypeService>();
-            services.AddScoped<CrewService>();
-            services.AddScoped<DepartureService>();
-            services.AddScoped<FlightService>();
-            services.AddScoped<PilotService>();
-            services.AddScoped<StewardessService>();
-            services.AddScoped<TicketService>();
-
             services.AddScoped<IRepository<Plane>, Repository<Plane>>();
             services.AddScoped<IRepository<PlaneType>, Repository<PlaneType>>();
             services.AddScoped<IRepository<Crew>, Repository<Crew>>();
@@ -52,8 +43,8 @@ namespace AirportApi
             services.AddScoped<IRepository<Pilot>, Repository<Pilot>>();
             services.AddScoped<IRepository<Stewardess>, Repository<Stewardess>>();
             services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
-           // services.AddScoped<IService<PlaneDTO>, PlaneService>();
-           // services.AddScoped<IService<PlaneTypeDTO>, PlaneTypeService>();
+            // services.AddScoped<IService<PlaneDTO>, PlaneService>();
+            // services.AddScoped<IService<PlaneTypeDTO>, PlaneTypeService>();
             services.AddScoped<IService<CrewDTO>, CrewService>();
 //            services.AddScoped<IService<DepartureDTO>, DepartureService>();
 //            services.AddScoped<IService<FlightDTO>, FlightService>();
@@ -61,8 +52,18 @@ namespace AirportApi
 //            services.AddScoped<IService<StewardessDTO>, StewardessService>();
 //            services.AddScoped<IService<TicketDTO>, TicketService>();
 
-            
-
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Flight, FlightDTO>();
+                cfg.CreateMap<Departure, DepartureDTO>();
+                cfg.CreateMap<Pilot, PilotDTO>();
+                cfg.CreateMap<Crew, CrewDTO>();
+                cfg.CreateMap<List<Crew>, List<CrewDTO>>();
+                cfg.CreateMap<Plane, PlaneDTO>();
+                cfg.CreateMap<PlaneType, PlaneTypeDTO>();
+                cfg.CreateMap<Stewardess, StewardessDTO>();
+                cfg.CreateMap<Ticket, TicketDTO>();
+            });
 
 
 //            cfg.CreateMap<Flight, FlightDTO>();

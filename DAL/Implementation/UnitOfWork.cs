@@ -9,7 +9,7 @@ namespace DAL.Implementation
     {
         private readonly IDataSource dataSource;
 
-        public UnitOfWork(DataSource dataSource)
+        public UnitOfWork(IDataSource dataSource)
         {
             this.dataSource = dataSource;
         }

@@ -8,14 +8,14 @@ namespace DAL.Implementation
 {
     public class DataSource : IDataSource
     {
-        public List<Plane> Planes { get; set; }
-        public List<Pilot> Pilots { get; set; }
-        public List<Flight> Flights { get; set; }
-        public List<Ticket> Tickets { get; set; }
-        public List<Departure> Departures { get; set; }
-        public List<Stewardess> Stewardesses { get; set; }
-        public List<Crew> Crews { get; set; }
-        public List<PlaneType> PlaneTypes { get; set; }
+        public List<Plane> Planes { get; set; } = new List<Plane>();
+        public List<Pilot> Pilots { get; set; } = new List<Pilot>();
+        public List<Flight> Flights { get; set; } = new List<Flight>();
+        public List<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public List<Departure> Departures { get; set; } = new List<Departure>();
+        public List<Stewardess> Stewardesses { get; set; } = new List<Stewardess>();
+        public List<Crew> Crews { get; set; } = new List<Crew>();
+        public List<PlaneType> PlaneTypes { get; set; } = new List<PlaneType>();
 
         public DataSource()
         {
