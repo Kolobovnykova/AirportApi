@@ -7,6 +7,6 @@ namespace DAL.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public TimeSpan Experience { get; set; }
+        public int Experience { get; set; }
     }
 }

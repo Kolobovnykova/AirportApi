@@ -3,16 +3,17 @@ using DAL.Models;
 
 namespace DAL.Interfaces
 {
-    public class IDataSource
+    public interface IDataSource
     {
-        public List<Airport> Airports { get; set; }
-        public List<Flight> Flights { get; set; }
-        public List<Ticket> Tickets { get; set; }
-        public List<Departure> Departures { get; set; }
-        public List<Stewardess> Stewardesses { get; set; }
-        public List<Pilot> Pilots { get; set; }
-        public List<Crew> Crews { get; set; }
-        public List<Plane> Planes { get; set; }
-        public List<PlaneType> PlaneTypes { get; set; }
+        List<Flight> Flights { get; set; }
+        List<Ticket> Tickets { get; set; }
+        List<Departure> Departures { get; set; }
+        List<Stewardess> Stewardesses { get; set; }
+        List<Pilot> Pilots { get; set; }
+        List<Crew> Crews { get; set; }
+        List<Plane> Planes { get; set; }
+        List<PlaneType> PlaneTypes { get; set; }
+
+        List<TEntity> Set<TEntity>();
     }
 }

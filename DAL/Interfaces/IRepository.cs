@@ -5,10 +5,9 @@ namespace DAL.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : Entity
     {
-        TEntity Get(int id);
-        IEnumerable<TEntity> GetAll();
+        List<TEntity> Get(int? filter = null);
         void Create(TEntity entity);
         void Update(TEntity entity);
-        void Delete(int id);
+        void Delete(int? filter = null);
     }
 }
