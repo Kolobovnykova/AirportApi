@@ -7,9 +7,9 @@ namespace DAL.Implementation.Configurations
     {
         public TicketConfiguration(EntityTypeBuilder<Ticket> entityBuilder)
         {
-            entityBuilder.HasKey(x => x.Id);
-            entityBuilder.Property(x => x.Price).IsRequired();
-            entityBuilder.HasOne(x => x.Flight).WithMany(x => x.Tickets).HasForeignKey(x => x.FlightId);
+//            entityBuilder.HasKey(x => x.Id);
+//            entityBuilder.Property(x => x.Price).IsRequired();
+//            entityBuilder.HasOne(x => x.Flight).WithMany(x => x.Tickets).HasForeignKey(x => x.FlightId);
         }
     }
 }

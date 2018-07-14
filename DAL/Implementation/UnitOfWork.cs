@@ -37,12 +37,12 @@ namespace DAL.Implementation
 
         public int SaveChages()
         {
-            throw new NotImplementedException();
+            return context.SaveChanges();
         }
 
         public Task<int> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return context.SaveChangesAsync();
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AirportContext))]
-    [Migration("20180714172305_InitialMigration")]
+    [Migration("20180714221012_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("PilotId");
+                    b.Property<int>("PilotId");
 
                     b.HasKey("Id");
 
@@ -42,19 +42,20 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CrewId");
+                    b.Property<int>("CrewId");
 
                     b.Property<DateTime>("DateOfDeparture");
 
-                    b.Property<int?>("FlightId");
+                    b.Property<int>("FlightId");
 
-                    b.Property<int?>("PlaneId");
+                    b.Property<int>("PlaneId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CrewId");
 
-                    b.HasIndex("FlightId");
+                    b.HasIndex("FlightId")
+                        .IsUnique();
 
                     b.HasIndex("PlaneId");
 
@@ -71,9 +72,11 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("DateOfDeparture");
 
-                    b.Property<string>("Departure");
+                    b.Property<string>("Destination")
+                        .IsRequired();
 
-                    b.Property<string>("Destination");
+                    b.Property<string>("PointOfDeparture")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -90,9 +93,13 @@ namespace DAL.Migrations
 
                     b.Property<int>("Experience");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -109,9 +116,11 @@ namespace DAL.Migrations
 
                     b.Property<int>("Lifetime");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
-                    b.Property<int?>("PlaneTypeId");
+                    b.Property<int>("PlaneTypeId");
 
                     b.HasKey("Id");
 
@@ -134,7 +143,9 @@ namespace DAL.Migrations
 
                     b.Property<int>("MaxSpeed");
 
-                    b.Property<string>("Model");
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<int>("NumberOfSeats");
 
@@ -149,13 +160,17 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CrewId");
+                    b.Property<int>("CrewId");
 
                     b.Property<DateTime>("DateOfBirth");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -170,7 +185,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("FlightId");
+                    b.Property<int>("FlightId");
 
                     b.Property<decimal>("Price");
 
@@ -185,43 +200,50 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Models.Pilot", "Pilot")
                         .WithMany()
-                        .HasForeignKey("PilotId");
+                        .HasForeignKey("PilotId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Models.Departure", b =>
                 {
                     b.HasOne("DAL.Models.Crew", "Crew")
                         .WithMany()
-                        .HasForeignKey("CrewId");
+                        .HasForeignKey("CrewId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Models.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId");
+                        .WithOne("Departure")
+                        .HasForeignKey("DAL.Models.Departure", "FlightId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Models.Plane", "Plane")
                         .WithMany()
-                        .HasForeignKey("PlaneId");
+                        .HasForeignKey("PlaneId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Models.Plane", b =>
                 {
                     b.HasOne("DAL.Models.PlaneType", "PlaneType")
                         .WithMany()
-                        .HasForeignKey("PlaneTypeId");
+                        .HasForeignKey("PlaneTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Models.Stewardess", b =>
                 {
-                    b.HasOne("DAL.Models.Crew", "Crew")
+                    b.HasOne("DAL.Models.Crew")
                         .WithMany("Stewardesses")
-                        .HasForeignKey("CrewId");
+                        .HasForeignKey("CrewId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Models.Ticket", b =>
                 {
-                    b.HasOne("DAL.Models.Flight", "Flight")
+                    b.HasOne("DAL.Models.Flight")
                         .WithMany("Tickets")
-                        .HasForeignKey("FlightId");
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

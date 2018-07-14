@@ -7,11 +7,11 @@ namespace DAL.Implementation.Configurations
     {
         public StewardessConfiguration(EntityTypeBuilder<Stewardess> entityBuilder)
         {
-            entityBuilder.HasKey(x => x.Id);
-            entityBuilder.Property(x => x.FirstName).IsRequired();
-            entityBuilder.Property(x => x.LastName).IsRequired();
-            entityBuilder.Property(x => x.DateOfBirth).IsRequired();
-            entityBuilder.HasOne(x => x.Crew).WithMany(x => x.Stewardesses).HasForeignKey(x => x.CrewId);
+//            entityBuilder.HasKey(x => x.Id);
+//            entityBuilder.Property(x => x.FirstName).IsRequired();
+//            entityBuilder.Property(x => x.LastName).IsRequired();
+//            entityBuilder.Property(x => x.DateOfBirth).IsRequired();
+//            entityBuilder.HasOne(x => x.Crew).WithMany(x => x.Stewardesses).HasForeignKey(x => x.CrewId);
         }
     }
 }

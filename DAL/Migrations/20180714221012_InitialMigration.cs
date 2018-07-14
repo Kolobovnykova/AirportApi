@@ -14,9 +14,9 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Departure = table.Column<string>(nullable: true),
+                    PointOfDeparture = table.Column<string>(nullable: false),
                     DateOfDeparture = table.Column<DateTime>(nullable: false),
-                    Destination = table.Column<string>(nullable: true),
+                    Destination = table.Column<string>(nullable: false),
                     DateOfArrival = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -30,8 +30,8 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     Experience = table.Column<int>(nullable: false)
                 },
@@ -46,7 +46,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Model = table.Column<string>(nullable: true),
+                    Model = table.Column<string>(maxLength: 50, nullable: false),
                     NumberOfSeats = table.Column<int>(nullable: false),
                     CarryingCapacity = table.Column<int>(nullable: false),
                     MaxRange = table.Column<int>(nullable: false),
@@ -64,7 +64,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FlightId = table.Column<int>(nullable: true),
+                    FlightId = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -75,7 +75,7 @@ namespace DAL.Migrations
                         column: x => x.FlightId,
                         principalTable: "Flights",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,7 +84,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PilotId = table.Column<int>(nullable: true)
+                    PilotId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace DAL.Migrations
                         column: x => x.PilotId,
                         principalTable: "Pilots",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,8 +103,8 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    PlaneTypeId = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(maxLength: 40, nullable: false),
+                    PlaneTypeId = table.Column<int>(nullable: false),
                     DateOfRelease = table.Column<DateTime>(nullable: false),
                     Lifetime = table.Column<int>(nullable: false)
                 },
@@ -116,7 +116,7 @@ namespace DAL.Migrations
                         column: x => x.PlaneTypeId,
                         principalTable: "Planetypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,10 +125,10 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    CrewId = table.Column<int>(nullable: true)
+                    CrewId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,7 +138,7 @@ namespace DAL.Migrations
                         column: x => x.CrewId,
                         principalTable: "Crews",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -147,10 +147,10 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FlightId = table.Column<int>(nullable: true),
+                    FlightId = table.Column<int>(nullable: false),
                     DateOfDeparture = table.Column<DateTime>(nullable: false),
-                    CrewId = table.Column<int>(nullable: true),
-                    PlaneId = table.Column<int>(nullable: true)
+                    CrewId = table.Column<int>(nullable: false),
+                    PlaneId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,19 +160,19 @@ namespace DAL.Migrations
                         column: x => x.CrewId,
                         principalTable: "Crews",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Departures_Flights_FlightId",
                         column: x => x.FlightId,
                         principalTable: "Flights",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Departures_Planes_PlaneId",
                         column: x => x.PlaneId,
                         principalTable: "Planes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -188,7 +188,8 @@ namespace DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Departures_FlightId",
                 table: "Departures",
-                column: "FlightId");
+                column: "FlightId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departures_PlaneId",
