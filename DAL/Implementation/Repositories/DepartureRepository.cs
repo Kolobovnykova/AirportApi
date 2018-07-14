@@ -18,14 +18,20 @@ namespace DAL.Implementation.Repositories
 
         public List<Departure> GetAll()
         {
-            var query = context.Departures;
+            var query = context.Departures.Include(d => d.Crew).ThenInclude(c => c.Pilot).Include(d => d.Crew)
+                .ThenInclude(c => c.Stewardesses)
+                .Include(d => d.Flight).ThenInclude(f => f.Tickets)
+                .Include(d => d.Plane).ThenInclude(p => p.PlaneType);
 
             return query.ToList();
         }
 
         public Departure Get(int id)
         {
-            return context.Departures.Find(id);
+            return context.Departures.Include(d => d.Crew).ThenInclude(c => c.Pilot).Include(d => d.Crew)
+                .ThenInclude(c => c.Stewardesses)
+                .Include(d => d.Flight).ThenInclude(f => f.Tickets)
+                .Include(d => d.Plane).ThenInclude(p => p.PlaneType).FirstOrDefault(s => s.Id == id);
         }
 
         public void Create(Departure entity)

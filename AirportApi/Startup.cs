@@ -12,6 +12,7 @@ using DAL.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ namespace AirportApi
         {
             services.AddMvc();
 
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRepository<Plane>, PlaneRepository>();
             services.AddScoped<IRepository<PlaneType>, PlaneTypeRepository>();
             services.AddScoped<IRepository<Crew>, CrewRepository>();
@@ -51,6 +52,10 @@ namespace AirportApi
             services.AddScoped<IService<PilotDTO>, PilotService>();
             services.AddScoped<IService<StewardessDTO>, StewardessService>();
             services.AddScoped<IService<TicketDTO>, TicketService>();
+
+            services.AddDbContext<AirportContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringAirportDb"),
+                    b => b.MigrationsAssembly("DAL")));
 
             Mapper.Initialize(cfg =>
             {
@@ -71,11 +76,6 @@ namespace AirportApi
                 cfg.CreateMap<Ticket, TicketDTO>();
                 cfg.CreateMap<TicketDTO, Ticket>();
             });
-            
-            using (var client = new AirportContext())
-            {
-                AirportDbInitializer.Initialize(client);
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +84,13 @@ namespace AirportApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<AirportContext>();
+                context.Database.EnsureCreated();
+                AirportDbInitializer.Initialize(context);
             }
 
             app.UseMvc();

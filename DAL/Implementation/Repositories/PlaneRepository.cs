@@ -18,14 +18,14 @@ namespace DAL.Implementation.Repositories
 
         public List<Plane> GetAll()
         {
-            var query = context.Planes;
+            var query = context.Planes.Include(p => p.PlaneType);
 
             return query.ToList();
         }
 
         public Plane Get(int id)
         {
-            return context.Planes.Find(id);
+            return context.Planes.Include(p => p.PlaneType).FirstOrDefault(f => f.Id == id);
         }
 
         public void Create(Plane entity)

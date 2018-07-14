@@ -18,14 +18,14 @@ namespace DAL.Implementation.Repositories
 
         public List<Crew> GetAll()
         {
-            var query = context.Crews;
+            var query = context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses);
 
             return query.ToList();
         }
 
         public Crew Get(int id)
         {
-            return context.Crews.Find(id);
+            return context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses).FirstOrDefault(c => c.Id == id);
         }
 
         public void Create(Crew entity)

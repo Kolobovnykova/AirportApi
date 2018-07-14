@@ -18,14 +18,14 @@ namespace DAL.Implementation.Repositories
 
         public List<Flight> GetAll()
         {
-            var query = context.Flights;
+            var query = context.Flights.Include(f => f.Tickets);
 
             return query.ToList();
         }
 
         public Flight Get(int id)
         {
-            return context.Flights.Find(id);
+            return context.Flights.Include(f => f.Tickets).FirstOrDefault(f => f.Id == id);
         }
 
         public void Create(Flight entity)
