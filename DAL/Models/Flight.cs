@@ -6,11 +6,11 @@ namespace DAL.Models
 {
     public class Flight : Entity
     {
-        [Required]
+        [Required, MaxLength(100)]
         public string PointOfDeparture { get; set; }
         [Required]
         public DateTime DateOfDeparture { get; set; }
-        [Required]
+        [Required, MaxLength(100)]
         public string Destination { get; set; }
         [Required]
         public DateTime DateOfArrival { get; set; }

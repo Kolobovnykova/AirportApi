@@ -16,6 +16,5 @@ namespace DAL.Models
         public int MaxSpeed { get; set; }
         [Required]
         public int MaxAltitude { get; set; }
-     //   public Plane Plane { get; set; }
     }
 }

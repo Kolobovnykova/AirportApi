@@ -13,6 +13,5 @@ namespace DAL.Models
         public DateTime DateOfBirth { get; set; }
         [Required]
         public virtual int CrewId { get; set; }
-       // public Crew Crew { get; set; }
     }
 }

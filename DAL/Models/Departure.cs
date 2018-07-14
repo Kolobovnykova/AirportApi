@@ -11,10 +11,8 @@ namespace DAL.Models
         public virtual Flight Flight { get; set; }
         [Required]
         public virtual DateTime DateOfDeparture { get; set; }
-       // public int CrewId { get; set; }
         [Required]
         public virtual Crew Crew { get; set; }
-       // public int PlaneId { get; set; }
         [Required]
         public virtual Plane Plane { get; set; }
     }
