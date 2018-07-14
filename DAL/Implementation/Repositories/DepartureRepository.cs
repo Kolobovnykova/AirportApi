@@ -51,15 +51,5 @@ namespace DAL.Implementation.Repositories
 
             context.Departures.Remove(entity);
         }
-
-        public virtual void Save()
-        {
-            context.SaveChanges();
-        }
-
-        public virtual Task SaveAsync()
-        {
-            return context.SaveChangesAsync();
-        }
     }
 }
