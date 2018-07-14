@@ -7,5 +7,7 @@ namespace DAL.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public int CrewId { get; set; }
+        public Crew Crew { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace DAL.Models
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int Experience { get; set; }
+        public Crew Crew { get; set; }
     }
 }

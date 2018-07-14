@@ -20,7 +20,7 @@ namespace BLL.Services
 
         public CrewDTO GetById(int id)
         {
-            var item = Mapper.Map<Crew, CrewDTO>(unitOfWork.CrewRepository.Get(id).FirstOrDefault());
+            var item = Mapper.Map<Crew, CrewDTO>(unitOfWork.CrewRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +32,7 @@ namespace BLL.Services
 
         public List<CrewDTO> GetAll()
         {
-            return Mapper.Map<List<Crew>, List<CrewDTO>>(unitOfWork.CrewRepository.Get());
+            return Mapper.Map<List<Crew>, List<CrewDTO>>(unitOfWork.CrewRepository.GetAll());
         }
 
         public void Add(CrewDTO entity)

@@ -7,6 +7,7 @@ using AutoMapper;
 using BLL.Interfaces;
 using BLL.Services;
 using DAL.Implementation;
+using DAL.Implementation.Repositories;
 using DAL.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Builder;
@@ -34,15 +35,14 @@ namespace AirportApi
             services.AddMvc();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IDataSource, DataSource>();
-            services.AddScoped<IRepository<Plane>, Repository<Plane>>();
-            services.AddScoped<IRepository<PlaneType>, Repository<PlaneType>>();
-            services.AddScoped<IRepository<Crew>, Repository<Crew>>();
-            services.AddScoped<IRepository<Departure>, Repository<Departure>>();
-            services.AddScoped<IRepository<Flight>, Repository<Flight>>();
-            services.AddScoped<IRepository<Pilot>, Repository<Pilot>>();
-            services.AddScoped<IRepository<Stewardess>, Repository<Stewardess>>();
-            services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+            services.AddScoped<IRepository<Plane>, PlaneRepository>();
+            services.AddScoped<IRepository<PlaneType>, PlaneTypeRepository>();
+            services.AddScoped<IRepository<Crew>, CrewRepository>();
+            services.AddScoped<IRepository<Departure>, DepartureRepository>();
+            services.AddScoped<IRepository<Flight>, FlightRepository>();
+            services.AddScoped<IRepository<Pilot>, PilotRepository>();
+            services.AddScoped<IRepository<Stewardess>, StewardessRepository>();
+            services.AddScoped<IRepository<Ticket>, TicketRepository>();
             services.AddScoped<IService<PlaneDTO>, PlaneService>();
             services.AddScoped<IService<PlaneTypeDTO>, PlaneTypeService>();
             services.AddScoped<IService<CrewDTO>, CrewService>();
@@ -71,6 +71,12 @@ namespace AirportApi
                 cfg.CreateMap<Ticket, TicketDTO>();
                 cfg.CreateMap<TicketDTO, Ticket>();
             });
+            
+            using (var client = new AirportContext())
+            {
+                client.Database.EnsureCreated();
+                //client.Seed();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

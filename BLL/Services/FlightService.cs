@@ -20,7 +20,7 @@ namespace BLL.Services
 
         public FlightDTO GetById(int id)
         {
-            var item = Mapper.Map<Flight, FlightDTO>(unitOfWork.FlightRepository.Get(id).FirstOrDefault());
+            var item = Mapper.Map<Flight, FlightDTO>(unitOfWork.FlightRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +32,7 @@ namespace BLL.Services
 
         public List<FlightDTO> GetAll()
         {
-            return Mapper.Map<List<Flight>, List<FlightDTO>>(unitOfWork.FlightRepository.Get());
+            return Mapper.Map<List<Flight>, List<FlightDTO>>(unitOfWork.FlightRepository.GetAll());
         }
 
         public void Add(FlightDTO entity)

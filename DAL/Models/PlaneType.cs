@@ -8,5 +8,6 @@
         public int MaxRange { get; set; }
         public int MaxSpeed { get; set; }
         public int MaxAltitude { get; set; }
+        public Plane Plane { get; set; }
     }
 }
