@@ -59,11 +59,11 @@ namespace AirportApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             try
             {
                 service.GetById(id);
-                service.Update(id, item);
+                service.Update(item);
                 service.SaveChanges();
                 return Ok(item);
             }

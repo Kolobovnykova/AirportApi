@@ -6,7 +6,7 @@ namespace DAL.Models
     {
         [Required]
         public int FlightId { get; set; }
-        [Required]
+        [Required, DataType(DataType.Currency)]
         public decimal Price { get; set; }
     }
 }
