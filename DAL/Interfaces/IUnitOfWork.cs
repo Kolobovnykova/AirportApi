@@ -13,7 +13,7 @@ namespace DAL.Interfaces
         IRepository<Departure> DepartureRepository { get; }
         IRepository<Stewardess> StewardessRepository { get; }
         IRepository<Pilot> PilotRepository { get; }
-        int SaveChages();
+        void SaveChanges();
         Task<int> SaveChangesAsync();
     }
 }

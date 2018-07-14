@@ -34,10 +34,9 @@ namespace DAL.Implementation
         public IRepository<Stewardess> StewardessRepository => stewardessRepository ?? (stewardessRepository = new StewardessRepository(context));
         public IRepository<Ticket> TicketRepository => ticketRepository ?? (ticketRepository = new TicketRepository(context));
 
-
-        public int SaveChages()
+        public void SaveChanges()
         {
-            return context.SaveChanges();
+            context.SaveChanges();
         }
 
         public Task<int> SaveChangesAsync()

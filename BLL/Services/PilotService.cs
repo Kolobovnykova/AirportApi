@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -48,6 +47,11 @@ namespace BLL.Services
         public void Remove(int id)
         {
             unitOfWork.PilotRepository.Delete(id);
+        }
+
+        public void SaveChanges()
+        {
+            unitOfWork.SaveChanges();
         }
     }
 }

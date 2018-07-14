@@ -13,5 +13,7 @@ namespace BLL.Interfaces
         void Update(T entity);
 
         void Remove(int id);
+
+        void SaveChanges();
     }
 }

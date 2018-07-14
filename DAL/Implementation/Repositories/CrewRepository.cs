@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Interfaces;
@@ -44,16 +45,6 @@ namespace DAL.Implementation.Repositories
             var entity = context.Crews.Find(id);
 
             context.Crews.Remove(entity);
-        }
-
-        public virtual void Save()
-        {
-            context.SaveChanges();
-        }
-
-        public virtual Task SaveAsync()
-        {
-            return context.SaveChangesAsync();
         }
     }
 }

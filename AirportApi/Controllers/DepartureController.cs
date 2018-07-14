@@ -47,11 +47,12 @@ namespace AirportApi.Controllers
             }
 
             service.Add(item);
+            service.SaveChanges();
             return Ok(item);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update([FromBody] DepartureDTO item)
+        public IActionResult Update(int id, [FromBody] DepartureDTO item)
         {
             if (!ModelState.IsValid)
             {
@@ -60,8 +61,9 @@ namespace AirportApi.Controllers
 
             try
             {
-                service.GetById(item.Id);
+                service.GetById(id);
                 service.Update(item);
+                service.SaveChanges();
                 return Ok(item);
             }
             catch (ValidationException)
@@ -77,6 +79,7 @@ namespace AirportApi.Controllers
             {
                 var item = service.GetById(id);
                 service.Remove(id);
+                service.SaveChanges();
                 return Ok(item);
             }
             catch (ValidationException)

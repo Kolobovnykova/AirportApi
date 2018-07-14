@@ -45,15 +45,5 @@ namespace DAL.Implementation.Repositories
 
             context.Tickets.Remove(entity);
         }
-
-        public virtual void Save()
-        {
-            context.SaveChanges();
-        }
-
-        public virtual Task SaveAsync()
-        {
-            return context.SaveChangesAsync();
-        }
     }
 }
