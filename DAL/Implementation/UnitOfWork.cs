@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DAL.Implementation.Repositories;
 using DAL.Interfaces;
 using DAL.Models;
 
@@ -7,11 +8,12 @@ namespace DAL.Implementation
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly IDataSource dataSource;
+       // private readonly IDataSource dataSource;
+        private readonly AirportContext context;
 
-        public UnitOfWork(IDataSource dataSource)
+        public UnitOfWork(AirportContext context)
         {
-            this.dataSource = dataSource;
+            this.context = context;
         }
         
         IRepository<Pilot> pilotRepository;
@@ -23,14 +25,14 @@ namespace DAL.Implementation
         IRepository<Stewardess> stewardessRepository;
         IRepository<PlaneType> planeTypeRepository;
 
-        public IRepository<Flight> FlightRepository => flightRepository ?? (flightRepository = new Repository<Flight>(dataSource));
-        public IRepository<Crew> CrewRepository => crewRepository ?? (crewRepository = new Repository<Crew>(dataSource));
-        public IRepository<Departure> DepartureRepository => departureRepository ?? (departureRepository = new Repository<Departure>(dataSource));
-        public IRepository<Plane> PlaneRepository => planeRepository ?? (planeRepository = new Repository<Plane>(dataSource));
-        public IRepository<Pilot> PilotRepository => pilotRepository ?? (pilotRepository = new Repository<Pilot>(dataSource));
-        public IRepository<PlaneType> PlaneTypeRepository => planeTypeRepository ?? (planeTypeRepository = new Repository<PlaneType>(dataSource));
-        public IRepository<Stewardess> StewardessRepository => stewardessRepository ?? (stewardessRepository = new Repository<Stewardess>(dataSource));
-        public IRepository<Ticket> TicketRepository => ticketRepository ?? (ticketRepository = new Repository<Ticket>(dataSource));
+        public IRepository<Flight> FlightRepository => flightRepository ?? (flightRepository = new FlightRepository(context));
+        public IRepository<Crew> CrewRepository => crewRepository ?? (crewRepository = new CrewRepository(context));
+        public IRepository<Departure> DepartureRepository => departureRepository ?? (departureRepository = new DepartureRepository(context));
+        public IRepository<Plane> PlaneRepository => planeRepository ?? (planeRepository = new PlaneRepository(context));
+        public IRepository<Pilot> PilotRepository => pilotRepository ?? (pilotRepository = new PilotRepository(context));
+        public IRepository<PlaneType> PlaneTypeRepository => planeTypeRepository ?? (planeTypeRepository = new PlaneTypeRepository(context));
+        public IRepository<Stewardess> StewardessRepository => stewardessRepository ?? (stewardessRepository = new StewardessRepository(context));
+        public IRepository<Ticket> TicketRepository => ticketRepository ?? (ticketRepository = new TicketRepository(context));
 
 
         public int SaveChages()

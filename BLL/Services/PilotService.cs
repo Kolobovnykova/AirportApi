@@ -20,7 +20,7 @@ namespace BLL.Services
 
         public PilotDTO GetById(int id)
         {
-            var item = Mapper.Map<Pilot, PilotDTO>(unitOfWork.PilotRepository.Get(id).FirstOrDefault());
+            var item = Mapper.Map<Pilot, PilotDTO>(unitOfWork.PilotRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +32,7 @@ namespace BLL.Services
 
         public List<PilotDTO> GetAll()
         {
-            return Mapper.Map<List<Pilot>, List<PilotDTO>>(unitOfWork.PilotRepository.Get());
+            return Mapper.Map<List<Pilot>, List<PilotDTO>>(unitOfWork.PilotRepository.GetAll());
         }
 
         public void Add(PilotDTO entity)

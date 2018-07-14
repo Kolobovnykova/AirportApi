@@ -20,7 +20,7 @@ namespace BLL.Services
 
         public TicketDTO GetById(int id)
         {
-            var item = Mapper.Map<Ticket, TicketDTO>(unitOfWork.TicketRepository.Get(id).FirstOrDefault());
+            var item = Mapper.Map<Ticket, TicketDTO>(unitOfWork.TicketRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +32,7 @@ namespace BLL.Services
 
         public List<TicketDTO> GetAll()
         {
-            return Mapper.Map<List<Ticket>, List<TicketDTO>>(unitOfWork.TicketRepository.Get());
+            return Mapper.Map<List<Ticket>, List<TicketDTO>>(unitOfWork.TicketRepository.GetAll());
         }
 
         public void Add(TicketDTO entity)

@@ -68,7 +68,7 @@ namespace DAL.Implementation
             Crews.Add(new Crew
             {
                 Id = 1,
-                Pilot = Pilots.FirstOrDefault(x => x.Id == 1),
+                //Pilot = Pilots.FirstOrDefault(x => x.Id == 1),
                 Stewardesses = new List<Stewardess>
                 {
                     Stewardesses.FirstOrDefault(x => x.Id == 1),
@@ -78,7 +78,7 @@ namespace DAL.Implementation
             Crews.Add(new Crew
             {
                 Id = 2,
-                Pilot = Pilots.FirstOrDefault(x => x.Id == 2),
+                //Pilot = Pilots.FirstOrDefault(x => x.Id == 2),
                 Stewardesses = new List<Stewardess>
                 {
                     Stewardesses.FirstOrDefault(x => x.Id == 3),
@@ -116,7 +116,7 @@ namespace DAL.Implementation
                 Id = 1,
                 DateOfArrival = new DateTime(2018, 10, 5, 16, 13, 0),
                 DateOfDeparture = new DateTime(2018, 10, 5, 20, 5, 0),
-                Departure = "Heathrow",
+                PointOfDeparture = "Heathrow",
                 Destination = "Boryspil",
                 Tickets = new List<Ticket>
                 {
@@ -130,7 +130,7 @@ namespace DAL.Implementation
                 Id = 2,
                 DateOfArrival = new DateTime(2018, 10, 5, 4, 5, 0),
                 DateOfDeparture = new DateTime(2018, 10, 5, 6, 5, 0),
-                Departure = "Boryspil",
+                PointOfDeparture = "Boryspil",
                 Destination = "Heathrow",
                 Tickets = new List<Ticket>
                 {

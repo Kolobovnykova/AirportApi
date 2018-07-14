@@ -20,7 +20,7 @@ namespace BLL.Services
 
         public StewardessDTO GetById(int id)
         {
-            var item = Mapper.Map<Stewardess, StewardessDTO>(unitOfWork.StewardessRepository.Get(id).FirstOrDefault());
+            var item = Mapper.Map<Stewardess, StewardessDTO>(unitOfWork.StewardessRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +32,7 @@ namespace BLL.Services
 
         public List<StewardessDTO> GetAll()
         {
-            return Mapper.Map<List<Stewardess>, List<StewardessDTO>>(unitOfWork.StewardessRepository.Get());
+            return Mapper.Map<List<Stewardess>, List<StewardessDTO>>(unitOfWork.StewardessRepository.GetAll());
         }
 
         public void Add(StewardessDTO entity)
