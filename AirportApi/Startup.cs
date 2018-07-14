@@ -74,7 +74,8 @@ namespace AirportApi
             
             using (var client = new AirportContext())
             {
-                client.Database.EnsureCreated();
+              //  client.Database.EnsureCreated();
+                AirportDbInitializer.Initialize(client);
                 //client.Seed();
             }
         }

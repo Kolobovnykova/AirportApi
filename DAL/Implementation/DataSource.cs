@@ -89,25 +89,25 @@ namespace DAL.Implementation
             Tickets.Add(new Ticket
             {
                 Id = 1,
-                Flight = null,
+                FlightId = 1,
                 Price = 38
             });
             Tickets.Add(new Ticket
             {
                 Id = 2,
-                Flight = null,
+                FlightId = 1,
                 Price = 47
             });
             Tickets.Add(new Ticket
             {
                 Id = 3,
-                Flight = null,
+                FlightId = 2,
                 Price = 59
             });
             Tickets.Add(new Ticket
             {
                 Id = 4,
-                Flight = null,
+                FlightId = 2,
                 Price = 35
             });
 
@@ -139,10 +139,10 @@ namespace DAL.Implementation
                 }
             });
 
-            Tickets[0].Flight = Flights.FirstOrDefault(x => x.Id == 1);
-            Tickets[1].Flight = Flights.FirstOrDefault(x => x.Id == 1);
-            Tickets[2].Flight = Flights.FirstOrDefault(x => x.Id == 2);
-            Tickets[3].Flight = Flights.FirstOrDefault(x => x.Id == 2);
+//            Tickets[0].Flight = Flights.FirstOrDefault(x => x.Id == 1);
+//            Tickets[1].Flight = Flights.FirstOrDefault(x => x.Id == 1);
+//            Tickets[2].Flight = Flights.FirstOrDefault(x => x.Id == 2);
+//            Tickets[3].Flight = Flights.FirstOrDefault(x => x.Id == 2);
 
             PlaneTypes.Add(new PlaneType
                 {
