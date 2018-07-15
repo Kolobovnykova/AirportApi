@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
+using Shared.Exceptions;
 
 namespace AirportApi.Controllers
 {
@@ -32,9 +33,9 @@ namespace AirportApi.Controllers
                 var item = service.GetById(id);
                 return Ok(item);
             }
-            catch (ValidationException)
+            catch (ValidationException e)
             {
-                return NotFound();
+                return NotFound(e.Message);
             }
         }
 
@@ -68,9 +69,9 @@ namespace AirportApi.Controllers
                 service.SaveChanges();
                 return Ok(item);
             }
-            catch (ValidationException)
+            catch (NotFoundException e)
             {
-                return NotFound();
+                return NotFound(e.Message);
             }
         }
 
@@ -84,9 +85,9 @@ namespace AirportApi.Controllers
                 service.SaveChanges();
                 return Ok(item);
             }
-            catch (ValidationException)
+            catch (NotFoundException e)
             {
-                return NotFound();
+                return NotFound(e.Message);
             }
         }
     }

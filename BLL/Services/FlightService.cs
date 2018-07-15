@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
 using DAL.Models;
 using Shared.DTOs;
+using Shared.Exceptions;
 
 namespace BLL.Services
 {
@@ -23,7 +23,7 @@ namespace BLL.Services
 
             if (item == null)
             {
-                throw new ValidationException($"Flight with id {id} was not found");
+                throw new NotFoundException($"Flight with id {id} was not found");
             }
 
             return item;
