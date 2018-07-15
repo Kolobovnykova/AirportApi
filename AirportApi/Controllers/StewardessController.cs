@@ -1,4 +1,5 @@
-﻿using BLL.Interfaces;
+﻿using System;
+using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using Shared.Exceptions;
@@ -46,9 +47,16 @@ namespace AirportApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            service.Add(item);
-            service.SaveChanges();
-            return Ok(item);
+            try
+            {
+                service.Add(item);
+                service.SaveChanges();
+                return Ok(item);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{id}")]
@@ -70,6 +78,10 @@ namespace AirportApi.Controllers
             catch (NotFoundException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
 

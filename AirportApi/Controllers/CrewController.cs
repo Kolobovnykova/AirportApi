@@ -55,7 +55,7 @@ namespace AirportApi.Controllers
                 service.SaveChanges();
                 return Ok(item);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -80,6 +80,10 @@ namespace AirportApi.Controllers
             catch (NotFoundException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
 
