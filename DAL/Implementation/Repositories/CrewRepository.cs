@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +34,9 @@ namespace DAL.Implementation.Repositories
 
         public void Update(Crew entity)
         {
-            context.Crews.Attach(entity);
+            var oldEntity = context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses)
+                .FirstOrDefault(c => c.Id == entity.Id);
+            context.Entry(oldEntity).State = EntityState.Detached;
             context.Entry(entity).State = EntityState.Modified;
         }
 

@@ -61,6 +61,7 @@ namespace AirportApi.Controllers
 
             try
             {
+                item.Id = id;
                 service.GetById(id);
                 service.Update(item);
                 service.SaveChanges();

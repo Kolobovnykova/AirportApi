@@ -35,7 +35,8 @@ namespace DAL.Implementation.Repositories
 
         public void Update(Ticket entity)
         {
-            context.Tickets.Attach(entity);
+            var oldEntity = context.Tickets.Find(entity.Id);
+            context.Entry(oldEntity).State = EntityState.Detached;
             context.Entry(entity).State = EntityState.Modified;
         }
 

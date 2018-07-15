@@ -35,7 +35,8 @@ namespace DAL.Implementation.Repositories
 
         public void Update(PlaneType entity)
         {
-            context.PlaneTypes.Attach(entity);
+            var oldEntity = context.PlaneTypes.Find(entity.Id);
+            context.Entry(oldEntity).State = EntityState.Detached;
             context.Entry(entity).State = EntityState.Modified;
         }
 
