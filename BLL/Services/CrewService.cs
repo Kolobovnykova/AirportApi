@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -36,11 +37,21 @@ namespace BLL.Services
 
         public void Add(CrewDTO entity)
         {
+            if (entity.Pilot == null || entity.Stewardesses == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
             unitOfWork.CrewRepository.Create(Mapper.Map<CrewDTO, Crew>(entity));
         }
 
         public void Update(CrewDTO entity)
         {
+            if (entity.Pilot == null || entity.Stewardesses == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
             unitOfWork.CrewRepository.Update(Mapper.Map<CrewDTO, Crew>(entity));
         }
 

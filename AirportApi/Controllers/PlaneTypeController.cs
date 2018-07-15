@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using Shared.Exceptions;

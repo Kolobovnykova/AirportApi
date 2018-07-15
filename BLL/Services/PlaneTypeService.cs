@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -36,11 +37,21 @@ namespace BLL.Services
 
         public void Add(PlaneTypeDTO entity)
         {
+            if (entity.Model == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
             unitOfWork.PlaneTypeRepository.Create(Mapper.Map<PlaneTypeDTO, PlaneType>(entity));
         }
 
         public void Update(PlaneTypeDTO entity)
         {
+            if (entity.Model == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
             unitOfWork.PlaneTypeRepository.Update(Mapper.Map<PlaneTypeDTO, PlaneType>(entity));
         }
 

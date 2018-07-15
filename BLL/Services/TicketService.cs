@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -36,11 +37,21 @@ namespace BLL.Services
 
         public void Add(TicketDTO entity)
         {
+            if (entity.FlightId == 0)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
             unitOfWork.TicketRepository.Create(Mapper.Map<TicketDTO, Ticket>(entity));
         }
 
         public void Update(TicketDTO entity)
         {
+            if (entity.FlightId == 0)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
             unitOfWork.TicketRepository.Update(Mapper.Map<TicketDTO, Ticket>(entity));
         }
 

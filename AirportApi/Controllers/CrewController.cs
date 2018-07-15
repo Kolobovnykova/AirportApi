@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
@@ -48,9 +49,16 @@ namespace AirportApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            service.Add(item);
-            service.SaveChanges();
-            return Ok(item);
+            try
+            {
+                service.Add(item);
+                service.SaveChanges();
+                return Ok(item);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{id}")]
