@@ -22,6 +22,11 @@ namespace BLL.Services
 
         public DepartureDTO GetById(int id)
         {
+            if (id < 0)
+            {
+                throw new ArgumentException();
+            }
+            
             var item = mapper.Map<Departure, DepartureDTO>(unitOfWork.DepartureRepository.Get(id));
 
             if (item == null)
@@ -59,6 +64,11 @@ namespace BLL.Services
 
         public void Remove(int id)
         {
+            if (id < 0)
+            {
+                throw new ArgumentException();
+            }
+            
             unitOfWork.DepartureRepository.Delete(id);
         }
 

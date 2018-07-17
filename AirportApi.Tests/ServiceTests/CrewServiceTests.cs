@@ -46,7 +46,7 @@ namespace AirportApi.Tests.ServiceTests
         }
 
         [Test, Order(2)]
-        public void GetCrewById_WhenWrongId_ReturnsNotFoundException()
+        public void GetCrewById_WhenWrongId_ThrowsNotFoundException()
         {
             var id = 10;
             var service = new CrewService(fakeUnitOfWork, mapper);
@@ -56,6 +56,16 @@ namespace AirportApi.Tests.ServiceTests
         }
 
         [Test, Order(3)]
+        public void GetCrewById_WhenNegativeId_ThrowsArgumentException()
+        {
+            var id = -1;
+            var service = new CrewService(fakeUnitOfWork, mapper);
+
+            Assert.Throws<ArgumentException>(
+                () => service.GetById(id));
+        }
+
+        [Test, Order(4)]
         public void CreateCrew_WhenValid_ShouldCreateCrewInDb()
         {
             var crew = new CrewDTO
@@ -94,7 +104,7 @@ namespace AirportApi.Tests.ServiceTests
             Assert.IsNotNull(result);
         }
 
-        [Test, Order(4)]
+        [Test, Order(5)]
         public void CreateCrew_WhenInvalid_ThrowsArgumentNullException()
         {
             var crew = new CrewDTO
@@ -122,7 +132,7 @@ namespace AirportApi.Tests.ServiceTests
                 () => service.Add(crew));
         }
 
-        [Test, Order(5)]
+        [Test, Order(6)]
         public void UpdateCrew_WhenInvalid_ThrowsArgumentNullException()
         {
             var crew = new CrewDTO
@@ -150,7 +160,7 @@ namespace AirportApi.Tests.ServiceTests
                 () => service.Update(crew));
         }
 
-        [Test, Order(6)]
+        [Test, Order(7)]
         public void DeleteCrew_WhenCorrectId_DeletesCrew()
         {
             var id = 1;
@@ -162,13 +172,23 @@ namespace AirportApi.Tests.ServiceTests
                 () => service.GetById(id));
         }
 
-        [Test, Order(7)]
+        [Test, Order(8)]
         public void DeleteCrew_WhenWrongId_ThrowsNotFoundException()
         {
             var id = 10;
             var service = new CrewService(fakeUnitOfWork, mapper);
 
             Assert.Throws<NotFoundException>(
+                () => service.Remove(id));
+        }
+
+        [Test, Order(9)]
+        public void DeleteCrew_WhenNegativeId_ThrowsArgumentException()
+        {
+            var id = -1;
+            var service = new CrewService(fakeUnitOfWork, mapper);
+
+            Assert.Throws<ArgumentException>(
                 () => service.Remove(id));
         }
     }

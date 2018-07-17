@@ -22,6 +22,11 @@ namespace BLL.Services
 
         public PilotDTO GetById(int id)
         {
+            if (id < 0)
+            {
+                throw new ArgumentException();
+            }
+            
             var item = mapper.Map<Pilot, PilotDTO>(unitOfWork.PilotRepository.Get(id));
 
             if (item == null)
@@ -59,6 +64,11 @@ namespace BLL.Services
 
         public void Remove(int id)
         {
+            if (id < 0)
+            {
+                throw new ArgumentException();
+            }
+            
             unitOfWork.PilotRepository.Delete(id);
         }
 

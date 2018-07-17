@@ -45,7 +45,7 @@ namespace AirportApi.Tests.ServiceTests
         }
 
         [Test, Order(2)]
-        public void GetPilotById_WhenWrongId_ReturnsNotFoundException()
+        public void GetPilotById_WhenWrongId_ThrowsNotFoundException()
         {
             var id = 10;
             var service = new PilotService(fakeUnitOfWork, mapper);
@@ -53,8 +53,18 @@ namespace AirportApi.Tests.ServiceTests
             Assert.Throws<NotFoundException>(
                 () => service.GetById(id));
         }
-
+        
         [Test, Order(3)]
+        public void GetPilotById_WhenNegativeId_ThrowsArgumentException()
+        {
+            var id = -1;
+            var service = new PilotService(fakeUnitOfWork, mapper);
+
+            Assert.Throws<ArgumentException>(
+                () => service.GetById(id));
+        }
+
+        [Test, Order(4)]
         public void CreatePilot_WhenValid_ShouldCreatePilotInDb()
         {
             var pilot = new PilotDTO
@@ -75,12 +85,15 @@ namespace AirportApi.Tests.ServiceTests
             Assert.IsNotNull(result);
         }
 
-        [Test, Order(4)]
-        public void CreatePilot_WhenInvalid_ThrowsArgumentNullException()
+        [Test, Order(5)]
+        [TestCase(null, "test_name")]
+        [TestCase("test_name", null)]
+        public void CreatePilot_WhenInvalid_ThrowsArgumentNullException(string fName, string lName)
         {
             var pilot = new PilotDTO
             {
-                FirstName = "test_pilot",
+                FirstName = fName,
+                LastName = lName,
                 DateOfBirth = new DateTime(1990, 12, 2),
                 Experience = 2
             };
@@ -91,7 +104,7 @@ namespace AirportApi.Tests.ServiceTests
                 () => service.Add(pilot));
         }
         
-        [Test, Order(5)]
+        [Test, Order(6)]
         public void UpdatePilot_WhenValid_UpdatesPilot()
         {
             var pilot = new PilotDTO
@@ -113,7 +126,7 @@ namespace AirportApi.Tests.ServiceTests
             Assert.IsNotNull(result);
         }
         
-        [Test, Order(6)]
+        [Test, Order(7)]
         public void UpdatePilot_WhenInvalid_ThrowsArgumentNullException()
         {
             var pilot = new PilotDTO
@@ -129,8 +142,25 @@ namespace AirportApi.Tests.ServiceTests
             Assert.Throws<ArgumentNullException>(
                 () => service.Update(pilot));
         }
+        
+        [Test, Order(8)]
+        public void UpdatePilot_WhenNotExistingInBase_ThrowsArgumentNullException()
+        {
+            var pilot = new PilotDTO
+            {
+                Id = 10,
+                LastName = "test_pilot_lastname",
+                DateOfBirth = new DateTime(1990, 8, 30),
+                Experience = 5
+            };
 
-        [Test, Order(7)]
+            var service = new PilotService(fakeUnitOfWork, mapper);
+
+            Assert.Throws<ArgumentNullException>(
+                () => service.Update(pilot));
+        }
+
+        [Test, Order(9)]
         public void DeletePilot_WhenCorrectId_DeletesPilot()
         {
             var id = 1;
@@ -142,13 +172,23 @@ namespace AirportApi.Tests.ServiceTests
                 () => service.GetById(id));
         }
 
-        [Test, Order(8)]
+        [Test, Order(10)]
         public void DeletePilot_WhenWrongId_ThrowsNotFoundException()
         {
             var id = 10;
             var service = new PilotService(fakeUnitOfWork, mapper);
 
             Assert.Throws<NotFoundException>(
+                () => service.Remove(id));
+        }
+        
+        [Test, Order(11)]
+        public void DeletePilot_WhenNegativeId_ThrowsArgumentException()
+        {
+            var id = -1;
+            var service = new PilotService(fakeUnitOfWork, mapper);
+
+            Assert.Throws<ArgumentException>(
                 () => service.Remove(id));
         }
     }

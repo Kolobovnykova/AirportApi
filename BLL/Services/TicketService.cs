@@ -22,6 +22,11 @@ namespace BLL.Services
 
         public TicketDTO GetById(int id)
         {
+            if (id < 0)
+            {
+                throw new ArgumentException();
+            }
+            
             var item = mapper.Map<Ticket, TicketDTO>(unitOfWork.TicketRepository.Get(id));
 
             if (item == null)
@@ -59,6 +64,11 @@ namespace BLL.Services
 
         public void Remove(int id)
         {
+            if (id < 0)
+            {
+                throw new ArgumentException();
+            }
+            
             unitOfWork.TicketRepository.Delete(id);
         }
 
