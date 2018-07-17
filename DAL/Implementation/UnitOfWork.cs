@@ -24,15 +24,59 @@ namespace DAL.Implementation
         IRepository<Stewardess> stewardessRepository;
         IRepository<PlaneType> planeTypeRepository;
 
-        public IRepository<Flight> FlightRepository => flightRepository ?? (flightRepository = new FlightRepository(context));
-        public IRepository<Crew> CrewRepository => crewRepository ?? (crewRepository = new CrewRepository(context));
-        public IRepository<Departure> DepartureRepository => departureRepository ?? (departureRepository = new DepartureRepository(context));
-        public IRepository<Plane> PlaneRepository => planeRepository ?? (planeRepository = new PlaneRepository(context));
-        public IRepository<Pilot> PilotRepository => pilotRepository ?? (pilotRepository = new PilotRepository(context));
-        public IRepository<PlaneType> PlaneTypeRepository => planeTypeRepository ?? (planeTypeRepository = new PlaneTypeRepository(context));
-        public IRepository<Stewardess> StewardessRepository => stewardessRepository ?? (stewardessRepository = new StewardessRepository(context));
-        public IRepository<Ticket> TicketRepository => ticketRepository ?? (ticketRepository = new TicketRepository(context));
+        public IRepository<Flight> FlightRepository
+        {
+            get => flightRepository ?? (flightRepository = new FlightRepository(context));
+            set => flightRepository = value;
+        }
 
+        public IRepository<Crew> CrewRepository
+        {
+            get => crewRepository ?? (crewRepository = new CrewRepository(context));
+            set => crewRepository = value;
+        }
+
+        public IRepository<Departure> DepartureRepository
+        {
+            get => departureRepository ?? (departureRepository = new DepartureRepository(context));
+            set => departureRepository = value;
+        }
+
+        public IRepository<Plane> PlaneRepository
+        {
+            get => planeRepository ?? (planeRepository = new PlaneRepository(context));
+            set => planeRepository = value;
+        }
+
+        public IRepository<Pilot> PilotRepository
+        {
+            get => pilotRepository ?? (pilotRepository = new PilotRepository(context));
+            set => pilotRepository = value;
+        }
+
+        public IRepository<PlaneType> PlaneTypeRepository
+        {
+            get => planeTypeRepository ?? (planeTypeRepository = new PlaneTypeRepository(context));
+            set => planeTypeRepository = value;
+        }
+
+        public IRepository<Stewardess> StewardessRepository
+        {
+            get => stewardessRepository ?? (stewardessRepository = new StewardessRepository(context));
+            set => stewardessRepository = value;
+        }
+
+        public IRepository<Ticket> TicketRepository
+        {
+            get => ticketRepository ?? (ticketRepository = new TicketRepository(context));
+            set => ticketRepository = value;
+        }
+
+        public void Seed()
+        {
+            AirportDbInitializer.Initialize(context);
+        }
+        
         public void SaveChanges()
         {
             context.SaveChanges();
@@ -41,6 +85,11 @@ namespace DAL.Implementation
         public Task<int> SaveChangesAsync()
         {
             return context.SaveChangesAsync();
+        }
+
+        public void DropDb()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
