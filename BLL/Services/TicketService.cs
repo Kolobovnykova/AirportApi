@@ -12,15 +12,17 @@ namespace BLL.Services
     public class TicketService : IService<TicketDTO>
     {
         readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public TicketService(IUnitOfWork unitOfWork)
+        public TicketService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public TicketDTO GetById(int id)
         {
-            var item = Mapper.Map<Ticket, TicketDTO>(unitOfWork.TicketRepository.Get(id));
+            var item = mapper.Map<Ticket, TicketDTO>(unitOfWork.TicketRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +34,7 @@ namespace BLL.Services
 
         public List<TicketDTO> GetAll()
         {
-            return Mapper.Map<List<Ticket>, List<TicketDTO>>(unitOfWork.TicketRepository.GetAll());
+            return mapper.Map<List<Ticket>, List<TicketDTO>>(unitOfWork.TicketRepository.GetAll());
         }
 
         public void Add(TicketDTO entity)
@@ -41,8 +43,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.TicketRepository.Create(Mapper.Map<TicketDTO, Ticket>(entity));
+
+            unitOfWork.TicketRepository.Create(mapper.Map<TicketDTO, Ticket>(entity));
         }
 
         public void Update(TicketDTO entity)
@@ -51,8 +53,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.TicketRepository.Update(Mapper.Map<TicketDTO, Ticket>(entity));
+
+            unitOfWork.TicketRepository.Update(mapper.Map<TicketDTO, Ticket>(entity));
         }
 
         public void Remove(int id)

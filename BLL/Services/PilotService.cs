@@ -11,16 +11,18 @@ namespace BLL.Services
 {
     public class PilotService : IService<PilotDTO>
     {
-        readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public PilotService(IUnitOfWork unitOfWork)
+        public PilotService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public PilotDTO GetById(int id)
         {
-            var item = Mapper.Map<Pilot, PilotDTO>(unitOfWork.PilotRepository.Get(id));
+            var item = mapper.Map<Pilot, PilotDTO>(unitOfWork.PilotRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +34,7 @@ namespace BLL.Services
 
         public List<PilotDTO> GetAll()
         {
-            return Mapper.Map<List<Pilot>, List<PilotDTO>>(unitOfWork.PilotRepository.GetAll());
+            return mapper.Map<List<Pilot>, List<PilotDTO>>(unitOfWork.PilotRepository.GetAll());
         }
 
         public void Add(PilotDTO entity)
@@ -42,7 +44,7 @@ namespace BLL.Services
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.PilotRepository.Create(Mapper.Map<PilotDTO, Pilot>(entity));
+            unitOfWork.PilotRepository.Create(mapper.Map<PilotDTO, Pilot>(entity));
         }
 
         public void Update(PilotDTO entity)
@@ -51,8 +53,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.PilotRepository.Update(Mapper.Map<PilotDTO, Pilot>(entity));
+
+            unitOfWork.PilotRepository.Update(mapper.Map<PilotDTO, Pilot>(entity));
         }
 
         public void Remove(int id)

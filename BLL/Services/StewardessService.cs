@@ -12,15 +12,17 @@ namespace BLL.Services
     public class StewardessService : IService<StewardessDTO>
     {
         readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public StewardessService(IUnitOfWork unitOfWork)
+        public StewardessService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public StewardessDTO GetById(int id)
         {
-            var item = Mapper.Map<Stewardess, StewardessDTO>(unitOfWork.StewardessRepository.Get(id));
+            var item = mapper.Map<Stewardess, StewardessDTO>(unitOfWork.StewardessRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +34,7 @@ namespace BLL.Services
 
         public List<StewardessDTO> GetAll()
         {
-            return Mapper.Map<List<Stewardess>, List<StewardessDTO>>(unitOfWork.StewardessRepository.GetAll());
+            return mapper.Map<List<Stewardess>, List<StewardessDTO>>(unitOfWork.StewardessRepository.GetAll());
         }
 
         public void Add(StewardessDTO entity)
@@ -42,7 +44,7 @@ namespace BLL.Services
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.StewardessRepository.Create(Mapper.Map<StewardessDTO, Stewardess>(entity));
+            unitOfWork.StewardessRepository.Create(mapper.Map<StewardessDTO, Stewardess>(entity));
         }
 
         public void Update(StewardessDTO entity)
@@ -51,8 +53,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.StewardessRepository.Update(Mapper.Map<StewardessDTO, Stewardess>(entity));
+
+            unitOfWork.StewardessRepository.Update(mapper.Map<StewardessDTO, Stewardess>(entity));
         }
 
         public void Remove(int id)

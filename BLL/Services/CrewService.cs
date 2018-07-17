@@ -12,15 +12,17 @@ namespace BLL.Services
     public class CrewService : IService<CrewDTO>
     {
         readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public CrewService(IUnitOfWork unitOfWork)
+        public CrewService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public CrewDTO GetById(int id)
         {
-            var item = Mapper.Map<Crew, CrewDTO>(unitOfWork.CrewRepository.Get(id));
+            var item = mapper.Map<Crew, CrewDTO>(unitOfWork.CrewRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +34,7 @@ namespace BLL.Services
 
         public List<CrewDTO> GetAll()
         {
-            return Mapper.Map<List<Crew>, List<CrewDTO>>(unitOfWork.CrewRepository.GetAll());
+            return mapper.Map<List<Crew>, List<CrewDTO>>(unitOfWork.CrewRepository.GetAll());
         }
 
         public void Add(CrewDTO entity)
@@ -41,8 +43,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.CrewRepository.Create(Mapper.Map<CrewDTO, Crew>(entity));
+
+            unitOfWork.CrewRepository.Create(mapper.Map<CrewDTO, Crew>(entity));
         }
 
         public void Update(CrewDTO entity)
@@ -51,8 +53,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.CrewRepository.Update(Mapper.Map<CrewDTO, Crew>(entity));
+
+            unitOfWork.CrewRepository.Update(mapper.Map<CrewDTO, Crew>(entity));
         }
 
         public void Remove(int id)

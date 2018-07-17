@@ -12,15 +12,17 @@ namespace BLL.Services
     public class FlightService : IService<FlightDTO>
     {
         readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public FlightService(IUnitOfWork unitOfWork)
+        public FlightService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public FlightDTO GetById(int id)
         {
-            var item = Mapper.Map<Flight, FlightDTO>(unitOfWork.FlightRepository.Get(id));
+            var item = mapper.Map<Flight, FlightDTO>(unitOfWork.FlightRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +34,7 @@ namespace BLL.Services
 
         public List<FlightDTO> GetAll()
         {
-            return Mapper.Map<List<Flight>, List<FlightDTO>>(unitOfWork.FlightRepository.GetAll());
+            return mapper.Map<List<Flight>, List<FlightDTO>>(unitOfWork.FlightRepository.GetAll());
         }
 
         public void Add(FlightDTO entity)
@@ -43,7 +45,7 @@ namespace BLL.Services
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.FlightRepository.Create(Mapper.Map<FlightDTO, Flight>(entity));
+            unitOfWork.FlightRepository.Create(mapper.Map<FlightDTO, Flight>(entity));
         }
 
         public void Update(FlightDTO entity)
@@ -53,8 +55,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.FlightRepository.Update(Mapper.Map<FlightDTO, Flight>(entity));
+
+            unitOfWork.FlightRepository.Update(mapper.Map<FlightDTO, Flight>(entity));
         }
 
         public void Remove(int id)

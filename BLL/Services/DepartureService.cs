@@ -12,15 +12,17 @@ namespace BLL.Services
     public class DepartureService : IService<DepartureDTO>
     {
         readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public DepartureService(IUnitOfWork unitOfWork)
+        public DepartureService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public DepartureDTO GetById(int id)
         {
-            var item = Mapper.Map<Departure, DepartureDTO>(unitOfWork.DepartureRepository.Get(id));
+            var item = mapper.Map<Departure, DepartureDTO>(unitOfWork.DepartureRepository.Get(id));
 
             if (item == null)
             {
@@ -32,7 +34,7 @@ namespace BLL.Services
 
         public List<DepartureDTO> GetAll()
         {
-            return Mapper.Map<List<Departure>, List<DepartureDTO>>(unitOfWork.DepartureRepository.GetAll());
+            return mapper.Map<List<Departure>, List<DepartureDTO>>(unitOfWork.DepartureRepository.GetAll());
         }
 
         public void Add(DepartureDTO entity)
@@ -42,7 +44,7 @@ namespace BLL.Services
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.DepartureRepository.Create(Mapper.Map<DepartureDTO, Departure>(entity));
+            unitOfWork.DepartureRepository.Create(mapper.Map<DepartureDTO, Departure>(entity));
         }
 
         public void Update(DepartureDTO entity)
@@ -51,8 +53,8 @@ namespace BLL.Services
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            unitOfWork.DepartureRepository.Update(Mapper.Map<DepartureDTO, Departure>(entity));
+
+            unitOfWork.DepartureRepository.Update(mapper.Map<DepartureDTO, Departure>(entity));
         }
 
         public void Remove(int id)

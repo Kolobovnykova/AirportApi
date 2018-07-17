@@ -45,30 +45,11 @@ namespace AirportApi
             services.AddScoped<IService<PilotDTO>, PilotService>();
             services.AddScoped<IService<StewardessDTO>, StewardessService>();
             services.AddScoped<IService<TicketDTO>, TicketService>();
+            services.AddScoped<IMapper>(m => MapperConfigurations.GetMapper().CreateMapper());
 
             services.AddDbContext<AirportContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringAirportDb"),
                     b => b.MigrationsAssembly("DAL")));
-
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Flight, FlightDTO>();
-                cfg.CreateMap<FlightDTO, Flight>();
-                cfg.CreateMap<Departure, DepartureDTO>();
-                cfg.CreateMap<DepartureDTO, Departure>();
-                cfg.CreateMap<Pilot, PilotDTO>();
-                cfg.CreateMap<PilotDTO, Pilot>();
-                cfg.CreateMap<Crew, CrewDTO>();
-                cfg.CreateMap<CrewDTO, Crew>();
-                cfg.CreateMap<Plane, PlaneDTO>();
-                cfg.CreateMap<PlaneDTO, Plane>();
-                cfg.CreateMap<PlaneType, PlaneTypeDTO>();
-                cfg.CreateMap<PlaneTypeDTO, PlaneType>();
-                cfg.CreateMap<Stewardess, StewardessDTO>();
-                cfg.CreateMap<StewardessDTO, Stewardess>();
-                cfg.CreateMap<Ticket, TicketDTO>();
-                cfg.CreateMap<TicketDTO, Ticket>();
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +59,7 @@ namespace AirportApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<AirportContext>();
