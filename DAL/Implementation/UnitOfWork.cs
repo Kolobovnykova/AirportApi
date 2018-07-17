@@ -7,7 +7,6 @@ namespace DAL.Implementation
 {
     public class UnitOfWork : IUnitOfWork
     {
-       // private readonly IDataSource dataSource;
         private readonly AirportContext context;
 
         public UnitOfWork(AirportContext context)
