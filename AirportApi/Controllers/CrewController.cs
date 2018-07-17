@@ -38,6 +38,10 @@ namespace AirportApi.Controllers
             {
                 return NotFound(e.Message);
             }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -100,6 +104,10 @@ namespace AirportApi.Controllers
             catch (NotFoundException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
     }
