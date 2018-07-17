@@ -20,7 +20,6 @@ namespace DAL.Implementation
             {
                 new Pilot
                 {
-                    // Id = 1,
                     FirstName = "Ivan",
                     LastName = "Ivanov",
                     DateOfBirth = new DateTime(1960, 08, 30),
@@ -28,7 +27,6 @@ namespace DAL.Implementation
                 },
                 new Pilot
                 {
-                    // Id = 2,
                     FirstName = "Petr",
                     LastName = "Petrov",
                     DateOfBirth = new DateTime(1980, 06, 12),
@@ -40,34 +38,26 @@ namespace DAL.Implementation
             {
                 new Stewardess
                 {
-                    //  Id = 1,
                     FirstName = "Maria",
                     LastName = "Petrova",
-                    //CrewId = 1,
                     DateOfBirth = new DateTime(1970, 05, 03)
                 },
                 new Stewardess
                 {
-                    //   Id = 2,
                     FirstName = "Anna",
                     LastName = "Ivanova",
-                    // CrewId = 1,
                     DateOfBirth = new DateTime(1990, 11, 09)
                 },
                 new Stewardess
                 {
-                    //  Id = 3,
                     FirstName = "Violetta",
                     LastName = "Sidorova",
-                    // CrewId = 2,
                     DateOfBirth = new DateTime(1980, 11, 10)
                 },
                 new Stewardess
                 {
-                    // Id = 4,
                     FirstName = "Valeria",
                     LastName = "Kuznetsova",
-                    // CrewId = 2,
                     DateOfBirth = new DateTime(1998, 10, 05)
                 }
             };
@@ -75,7 +65,6 @@ namespace DAL.Implementation
             {
                 new Crew
                 {
-                    //  Id = 1,
                     Pilot = pilots[0],
                     Stewardesses = new List<Stewardess>
                     {
@@ -85,7 +74,6 @@ namespace DAL.Implementation
                 },
                 new Crew
                 {
-                    // Id = 2,
                     Pilot = pilots[1],
                     Stewardesses = new List<Stewardess>
                     {
@@ -103,25 +91,21 @@ namespace DAL.Implementation
             {
                 new Ticket
                 {
-                    //    Id = 1,
                     FlightId = 1,
                     Price = 38
                 },
                 new Ticket
                 {
-                    //   Id = 2,
                     FlightId = 1,
                     Price = 47
                 },
                 new Ticket
                 {
-                    //  Id = 3,
                     FlightId = 2,
                     Price = 59
                 },
                 new Ticket
                 {
-                    //      Id = 4,
                     FlightId = 2,
                     Price = 35
                 }
@@ -133,7 +117,6 @@ namespace DAL.Implementation
             {
                 new PlaneType
                 {
-                    //       Id = 1,
                     Model = "Type 1",
                     CarryingCapacity = 1000,
                     MaxAltitude = 2000,
@@ -144,7 +127,6 @@ namespace DAL.Implementation
 
                 new PlaneType
                 {
-                    //       Id = 2,
                     Model = "Type 2",
                     CarryingCapacity = 1000,
                     MaxAltitude = 2000,
@@ -160,7 +142,6 @@ namespace DAL.Implementation
             {
                 new Plane
                 {
-                    //       Id = 1,
                     DateOfRelease = new DateTime(2017, 10, 9),
                     Lifetime = 14,
                     Name = "Plane 1",
@@ -168,7 +149,6 @@ namespace DAL.Implementation
                 },
                 new Plane
                 {
-                    //       Id = 2,
                     DateOfRelease = new DateTime(2016, 12, 1),
                     Lifetime = 10,
                     Name = "Plane 2",
@@ -182,7 +162,6 @@ namespace DAL.Implementation
             {
                 new Flight
                 {
-                    //        Id = 1,
                     DateOfArrival = new DateTime(2018, 10, 5, 16, 13, 0),
                     DateOfDeparture = new DateTime(2018, 10, 5, 20, 5, 0),
                     PointOfDeparture = "Heathrow",
@@ -195,7 +174,6 @@ namespace DAL.Implementation
                 },
                 new Flight
                 {
-                    //    Id = 2,
                     DateOfArrival = new DateTime(2018, 10, 5, 4, 5, 0),
                     DateOfDeparture = new DateTime(2018, 10, 5, 6, 5, 0),
                     PointOfDeparture = "Boryspil",
@@ -214,7 +192,6 @@ namespace DAL.Implementation
             {
                 new Departure
                 {
-                    //  Id = 1,
                     Crew = crews[0],
                     Flight = flights[0],
                     DateOfDeparture = new DateTime(2018, 10, 5, 6, 10, 0),
@@ -222,7 +199,6 @@ namespace DAL.Implementation
                 },
                 new Departure
                 {
-                    // Id = 2,
                     Crew = crews[1],
                     Flight = flights[1],
                     DateOfDeparture = new DateTime(2018, 10, 5, 8, 16, 0),
