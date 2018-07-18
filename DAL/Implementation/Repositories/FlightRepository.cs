@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.Models;
@@ -18,7 +17,7 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public async Task<List<Flight>>  GetAll()
+        public async Task<List<Flight>> GetAll()
         {
             return await context.Flights.Include(f => f.Tickets).ToListAsync();
         }

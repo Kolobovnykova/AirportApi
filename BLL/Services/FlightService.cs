@@ -40,6 +40,7 @@ namespace BLL.Services
 
         public async Task<List<FlightDTO>> GetAll()
         {
+            await WaitHelpers.WaitHelper(5000);
             return mapper.Map<List<Flight>, List<FlightDTO>>(await unitOfWork.FlightRepository.GetAll());
         }
 
