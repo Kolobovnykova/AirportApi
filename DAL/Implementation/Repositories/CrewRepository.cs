@@ -9,7 +9,7 @@ using Shared.Exceptions;
 
 namespace DAL.Implementation.Repositories
 {
-    public class CrewRepository : IRepository<Crew>
+    public class CrewRepository : ICrewRepository
     {
         private readonly AirportContext context;
 
@@ -37,6 +37,24 @@ namespace DAL.Implementation.Repositories
             }
             
             await context.Crews.AddAsync(entity);
+        }
+        
+        public async Task CreateRange(List<Crew> entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            foreach (var e in entity)
+            {
+                if (e.Id > 0)
+                {
+                    e.Id = 0;
+                }
+            }
+            
+            await context.Crews.AddRangeAsync(entity);
         }
 
         public async Task Update(Crew entity)

@@ -13,9 +13,9 @@ namespace AirportApi.Controllers
     [Route("api/crews")]
     public class CrewController : Controller
     {
-        private readonly IService<CrewDTO> service;
+        private readonly ICrewService service;
 
-        public CrewController(IService<CrewDTO> service)
+        public CrewController(ICrewService service)
         {
             this.service = service;
         }
@@ -41,6 +41,19 @@ namespace AirportApi.Controllers
                 return NotFound(e.Message);
             }
             catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("firstTen")]
+        public async Task<IActionResult> GetFirstTen()
+        {
+            try
+            {
+                return Ok(await service.LoadTenCrews());
+            }
+            catch (Exception e)
             {
                 return BadRequest();
             }
