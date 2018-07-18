@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -20,14 +21,14 @@ namespace BLL.Services
             this.mapper = mapper;
         }
 
-        public FlightDTO GetById(int id)
+        public async Task<FlightDTO> GetById(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            var item = mapper.Map<Flight, FlightDTO>(unitOfWork.FlightRepository.Get(id));
+            var item = mapper.Map<Flight, FlightDTO>(await unitOfWork.FlightRepository.Get(id));
 
             if (item == null)
             {
@@ -37,23 +38,12 @@ namespace BLL.Services
             return item;
         }
 
-        public List<FlightDTO> GetAll()
+        public async Task<List<FlightDTO>> GetAll()
         {
-            return mapper.Map<List<Flight>, List<FlightDTO>>(unitOfWork.FlightRepository.GetAll());
+            return mapper.Map<List<Flight>, List<FlightDTO>>(await unitOfWork.FlightRepository.GetAll());
         }
 
-        public void Add(FlightDTO entity)
-        {
-            if (entity.Destination == null || entity.PointOfDeparture == null || entity.Tickets == null ||
-                entity.DateOfArrival == null || entity.DateOfDeparture == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            unitOfWork.FlightRepository.Create(mapper.Map<FlightDTO, Flight>(entity));
-        }
-
-        public void Update(FlightDTO entity)
+        public async Task Add(FlightDTO entity)
         {
             if (entity.Destination == null || entity.PointOfDeparture == null || entity.Tickets == null ||
                 entity.DateOfArrival == null || entity.DateOfDeparture == null)
@@ -61,22 +51,33 @@ namespace BLL.Services
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.FlightRepository.Update(mapper.Map<FlightDTO, Flight>(entity));
+            await unitOfWork.FlightRepository.Create(mapper.Map<FlightDTO, Flight>(entity));
         }
 
-        public void Remove(int id)
+        public async Task Update(FlightDTO entity)
+        {
+            if (entity.Destination == null || entity.PointOfDeparture == null || entity.Tickets == null ||
+                entity.DateOfArrival == null || entity.DateOfDeparture == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await unitOfWork.FlightRepository.Update(mapper.Map<FlightDTO, Flight>(entity));
+        }
+
+        public async Task Remove(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            unitOfWork.FlightRepository.Delete(id);
+            await unitOfWork.FlightRepository.Delete(id);
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            unitOfWork.SaveChanges();
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

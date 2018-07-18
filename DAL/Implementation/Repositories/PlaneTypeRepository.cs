@@ -18,53 +18,51 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<PlaneType> GetAll()
+        public async Task<List<PlaneType>> GetAll()
         {
-            var query = context.PlaneTypes;
-
-            return query.ToList();
+            return await context.PlaneTypes.ToListAsync();
         }
 
-        public PlaneType Get(int id)
+        public async Task<PlaneType> Get(int id)
         {
-            return context.PlaneTypes.Find(id);
+            return await context.PlaneTypes.FindAsync(id);
         }
 
-        public void Create(PlaneType entity)
+        public async Task Create(PlaneType entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            context.PlaneTypes.Add(entity);
+
+            await context.PlaneTypes.AddAsync(entity);
         }
 
-        public void Update(PlaneType entity)
+        public async Task Update(PlaneType entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            var oldEntity = context.PlaneTypes.Find(entity.Id);
+
+            var oldEntity = await context.PlaneTypes.FindAsync(entity.Id);
             if (oldEntity == null)
             {
                 throw new NotFoundException(nameof(oldEntity));
             }
-            
+
             context.Entry(oldEntity).State = EntityState.Detached;
             context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = context.PlaneTypes.Find(id);
+            var entity = await context.PlaneTypes.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));
             }
-            
+
             context.PlaneTypes.Remove(entity);
         }
     }

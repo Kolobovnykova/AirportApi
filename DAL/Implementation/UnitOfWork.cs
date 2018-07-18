@@ -81,9 +81,9 @@ namespace DAL.Implementation
             context.SaveChanges();
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            return context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void DropDb()

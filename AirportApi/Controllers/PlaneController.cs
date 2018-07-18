@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
@@ -19,18 +20,18 @@ namespace AirportApi.Controllers
 
         //GET: api/planes/
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Json(service.GetAll());
+            return Json(await service.GetAll());
         }
 
         //GET: api/planes/id
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var item = service.GetById(id);
+                var item = await service.GetById(id);
                 return Ok(item);
             }
             catch (NotFoundException e)
@@ -44,7 +45,7 @@ namespace AirportApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] PlaneDTO item)
+        public async Task<IActionResult> Create([FromBody] PlaneDTO item)
         {
             if (!ModelState.IsValid)
             {
@@ -53,8 +54,8 @@ namespace AirportApi.Controllers
 
             try
             {
-                service.Add(item);
-                service.SaveChanges();
+                await service.Add(item);
+                await service.SaveChanges();
                 return Ok(item);
             }
             catch (Exception)
@@ -64,7 +65,7 @@ namespace AirportApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] PlaneDTO item)
+        public async Task<IActionResult> Update(int id, [FromBody] PlaneDTO item)
         {
             if (!ModelState.IsValid)
             {
@@ -74,9 +75,9 @@ namespace AirportApi.Controllers
             try
             {
                 item.Id = id;
-                service.GetById(id);
-                service.Update(item);
-                service.SaveChanges();
+                await service.GetById(id);
+                await service.Update(item);
+                await service.SaveChanges();
                 return Ok(item);
             }
             catch (NotFoundException e)
@@ -90,13 +91,13 @@ namespace AirportApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var item = service.GetById(id);
-                service.Remove(id);
-                service.SaveChanges();
+                var item = await service.GetById(id);
+                await service.Remove(id);
+                await service.SaveChanges();
                 return Ok(item);
             }
             catch (NotFoundException e)

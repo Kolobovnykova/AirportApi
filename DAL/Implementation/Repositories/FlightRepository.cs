@@ -18,36 +18,34 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<Flight> GetAll()
+        public async Task<List<Flight>>  GetAll()
         {
-            var query = context.Flights.Include(f => f.Tickets);
-
-            return query.ToList();
+            return await context.Flights.Include(f => f.Tickets).ToListAsync();
         }
 
-        public Flight Get(int id)
+        public async Task<Flight> Get(int id)
         {
-            return context.Flights.Include(f => f.Tickets).FirstOrDefault(f => f.Id == id);
+            return await context.Flights.Include(f => f.Tickets).FirstOrDefaultAsync(f => f.Id == id);
         }
 
-        public void Create(Flight entity)
+        public async Task Create(Flight entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             
-            context.Flights.Add(entity);
+            await context.Flights.AddAsync(entity);
         }
 
-        public void Update(Flight entity)
+        public async Task Update(Flight entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             
-            var oldEntity = context.Flights.Find(entity.Id);
+            var oldEntity = await context.Flights.FindAsync(entity.Id);
             if (oldEntity == null)
             {
                 throw new NotFoundException(nameof(oldEntity));
@@ -57,9 +55,9 @@ namespace DAL.Implementation.Repositories
             context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = context.Flights.Find(id);
+            var entity = await context.Flights.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));

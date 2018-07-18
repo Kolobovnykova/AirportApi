@@ -18,36 +18,34 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<Ticket> GetAll()
+        public async Task<List<Ticket>> GetAll()
         {
-            var query = context.Tickets;
-
-            return query.ToList();
+            return await context.Tickets.ToListAsync();
         }
 
-        public Ticket Get(int id)
+        public async Task<Ticket> Get(int id)
         {
-            return context.Tickets.Find(id);
+            return await context.Tickets.FindAsync(id);
         }
 
-        public void Create(Ticket entity)
+        public async Task Create(Ticket entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             
-            context.Tickets.Add(entity);
+            await context.Tickets.AddAsync(entity);
         }
 
-        public void Update(Ticket entity)
+        public async Task Update(Ticket entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             
-            var oldEntity = context.Tickets.Find(entity.Id);
+            var oldEntity = await context.Tickets.FindAsync(entity.Id);
             if (oldEntity == null)
             {
                 throw new NotFoundException(nameof(oldEntity));
@@ -56,9 +54,9 @@ namespace DAL.Implementation.Repositories
             context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = context.Tickets.Find(id);
+            var entity = await context.Tickets.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));

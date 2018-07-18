@@ -18,53 +18,51 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<Pilot> GetAll()
+        public async Task<List<Pilot>> GetAll()
         {
-            var query = context.Pilots;
-
-            return query.ToList();
+            return await context.Pilots.ToListAsync();
         }
 
-        public Pilot Get(int id)
+        public async Task<Pilot> Get(int id)
         {
-            return context.Pilots.Find(id);
+            return await context.Pilots.FindAsync(id);
         }
 
-        public void Create(Pilot entity)
+        public async Task Create(Pilot entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            context.Pilots.Add(entity);
+
+            await context.Pilots.AddAsync(entity);
         }
 
-        public void Update(Pilot entity)
+        public async Task Update(Pilot entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            var oldEntity = context.Pilots.Find(entity.Id);
+
+            var oldEntity = await context.Pilots.FindAsync(entity.Id);
             if (oldEntity == null)
             {
                 throw new NotFoundException(nameof(oldEntity));
             }
-            
+
             context.Entry(oldEntity).State = EntityState.Detached;
             context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = context.Pilots.Find(id);
+            var entity = await context.Pilots.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));
             }
-            
+
             context.Pilots.Remove(entity);
         }
     }

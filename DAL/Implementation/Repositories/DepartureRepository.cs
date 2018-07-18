@@ -18,42 +18,41 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<Departure> GetAll()
+        public async Task<List<Departure>> GetAll()
         {
-            var query = context.Departures.Include(d => d.Crew).ThenInclude(c => c.Pilot).Include(d => d.Crew)
+            return await context.Departures.Include(d => d.Crew).ThenInclude(c => c.Pilot).Include(d => d.Crew)
                 .ThenInclude(c => c.Stewardesses)
                 .Include(d => d.Flight).ThenInclude(f => f.Tickets)
-                .Include(d => d.Plane).ThenInclude(p => p.PlaneType);
-
-            return query.ToList();
+                .Include(d => d.Plane).ThenInclude(p => p.PlaneType)
+                .ToListAsync();
         }
 
-        public Departure Get(int id)
+        public async Task<Departure> Get(int id)
         {
-            return context.Departures.Include(d => d.Crew).ThenInclude(c => c.Pilot).Include(d => d.Crew)
+            return await context.Departures.Include(d => d.Crew).ThenInclude(c => c.Pilot).Include(d => d.Crew)
                 .ThenInclude(c => c.Stewardesses)
                 .Include(d => d.Flight).ThenInclude(f => f.Tickets)
-                .Include(d => d.Plane).ThenInclude(p => p.PlaneType).FirstOrDefault(s => s.Id == id);
+                .Include(d => d.Plane).ThenInclude(p => p.PlaneType).FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public void Create(Departure entity)
+        public async Task Create(Departure entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             
-            context.Departures.Add(entity);
+            await context.Departures.AddAsync(entity);
         }
 
-        public void Update(Departure entity)
+        public async Task Update(Departure entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             
-            var oldEntity = context.Departures.Find(entity.Id);
+            var oldEntity = await context.Departures.FindAsync(entity.Id);
             if (oldEntity == null)
             {
                 throw new NotFoundException(nameof(oldEntity));
@@ -63,9 +62,9 @@ namespace DAL.Implementation.Repositories
             context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = context.Departures.Find(id);
+            var entity = await context.Departures.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));

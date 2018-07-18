@@ -16,6 +16,6 @@ namespace DAL.Interfaces
         void Seed();
         void DropDb();
         void SaveChanges();
-        Task<int> SaveChangesAsync();
+        Task SaveChangesAsync();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -20,14 +21,14 @@ namespace BLL.Services
             this.mapper = mapper;
         }
 
-        public PlaneTypeDTO GetById(int id)
+        public async Task<PlaneTypeDTO> GetById(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            var item = mapper.Map<PlaneType, PlaneTypeDTO>(unitOfWork.PlaneTypeRepository.Get(id));
+            var item = mapper.Map<PlaneType, PlaneTypeDTO>(await unitOfWork.PlaneTypeRepository.Get(id));
 
             if (item == null)
             {
@@ -37,44 +38,44 @@ namespace BLL.Services
             return item;
         }
 
-        public List<PlaneTypeDTO> GetAll()
+        public async Task<List<PlaneTypeDTO>> GetAll()
         {
-            return mapper.Map<List<PlaneType>, List<PlaneTypeDTO>>(unitOfWork.PlaneTypeRepository.GetAll());
+            return mapper.Map<List<PlaneType>, List<PlaneTypeDTO>>(await unitOfWork.PlaneTypeRepository.GetAll());
         }
 
-        public void Add(PlaneTypeDTO entity)
-        {
-            if (entity.Model == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            unitOfWork.PlaneTypeRepository.Create(mapper.Map<PlaneTypeDTO, PlaneType>(entity));
-        }
-
-        public void Update(PlaneTypeDTO entity)
+        public async Task Add(PlaneTypeDTO entity)
         {
             if (entity.Model == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.PlaneTypeRepository.Update(mapper.Map<PlaneTypeDTO, PlaneType>(entity));
+            await unitOfWork.PlaneTypeRepository.Create(mapper.Map<PlaneTypeDTO, PlaneType>(entity));
         }
 
-        public void Remove(int id)
+        public async Task Update(PlaneTypeDTO entity)
+        {
+            if (entity.Model == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await unitOfWork.PlaneTypeRepository.Update(mapper.Map<PlaneTypeDTO, PlaneType>(entity));
+        }
+
+        public async Task Remove(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            unitOfWork.PlaneTypeRepository.Delete(id);
+            await unitOfWork.PlaneTypeRepository.Delete(id);
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            unitOfWork.SaveChanges();
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

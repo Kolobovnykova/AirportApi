@@ -18,53 +18,51 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<Plane> GetAll()
+        public async Task<List<Plane>> GetAll()
         {
-            var query = context.Planes.Include(p => p.PlaneType);
-
-            return query.ToList();
+            return await context.Planes.Include(p => p.PlaneType).ToListAsync();
         }
 
-        public Plane Get(int id)
+        public async Task<Plane> Get(int id)
         {
-            return context.Planes.Include(p => p.PlaneType).FirstOrDefault(f => f.Id == id);
+            return await context.Planes.Include(p => p.PlaneType).FirstOrDefaultAsync(f => f.Id == id);
         }
 
-        public void Create(Plane entity)
+        public async Task Create(Plane entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            context.Planes.Add(entity);
+
+            await context.Planes.AddAsync(entity);
         }
 
-        public void Update(Plane entity)
+        public async Task Update(Plane entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            var oldEntity = context.Planes.Find(entity.Id);
+
+            var oldEntity = await context.Planes.FindAsync(entity.Id);
             if (oldEntity == null)
             {
-                throw new ArgumentNullException(nameof(oldEntity));
+                throw new NotFoundException(nameof(oldEntity));
             }
-            
+
             context.Entry(oldEntity).State = EntityState.Detached;
             context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = context.Planes.Find(id);
+            var entity = await context.Planes.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));
             }
-            
+
             context.Planes.Remove(entity);
         }
     }

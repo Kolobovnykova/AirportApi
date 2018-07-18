@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -20,14 +21,14 @@ namespace BLL.Services
             this.mapper = mapper;
         }
 
-        public CrewDTO GetById(int id)
+        public async Task<CrewDTO> GetById(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
-            
-            var item = mapper.Map<Crew, CrewDTO>(unitOfWork.CrewRepository.Get(id));
+
+            var item = mapper.Map<Crew, CrewDTO>(await unitOfWork.CrewRepository.Get(id));
 
             if (item == null)
             {
@@ -37,44 +38,44 @@ namespace BLL.Services
             return item;
         }
 
-        public List<CrewDTO> GetAll()
+        public async Task<List<CrewDTO>> GetAll()
         {
-            return mapper.Map<List<Crew>, List<CrewDTO>>(unitOfWork.CrewRepository.GetAll());
+            return mapper.Map<List<Crew>, List<CrewDTO>>(await unitOfWork.CrewRepository.GetAll());
         }
 
-        public void Add(CrewDTO entity)
-        {
-            if (entity.Pilot == null || entity.Stewardesses == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            unitOfWork.CrewRepository.Create(mapper.Map<CrewDTO, Crew>(entity));
-        }
-
-        public void Update(CrewDTO entity)
+        public async Task Add(CrewDTO entity)
         {
             if (entity.Pilot == null || entity.Stewardesses == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.CrewRepository.Update(mapper.Map<CrewDTO, Crew>(entity));
+            await unitOfWork.CrewRepository.Create(mapper.Map<CrewDTO, Crew>(entity));
         }
 
-        public void Remove(int id)
+        public async Task Update(CrewDTO entity)
+        {
+            if (entity.Pilot == null || entity.Stewardesses == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await unitOfWork.CrewRepository.Update(mapper.Map<CrewDTO, Crew>(entity));
+        }
+
+        public async Task Remove(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
-            
-            unitOfWork.CrewRepository.Delete(id);
+
+            await unitOfWork.CrewRepository.Delete(id);
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            unitOfWork.SaveChanges();
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

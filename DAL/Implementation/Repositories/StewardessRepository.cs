@@ -18,53 +18,51 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<Stewardess> GetAll()
+        public async Task<List<Stewardess>> GetAll()
         {
-            var query = context.Stewardesses;
-
-            return query.ToList();
+            return await context.Stewardesses.ToListAsync();
         }
 
-        public Stewardess Get(int id)
+        public async Task<Stewardess> Get(int id)
         {
-            return context.Stewardesses.Find(id);
+            return await context.Stewardesses.FindAsync(id);
         }
 
-        public void Create(Stewardess entity)
+        public async Task Create(Stewardess entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            context.Stewardesses.Add(entity);
+
+            await context.Stewardesses.AddAsync(entity);
         }
 
-        public void Update(Stewardess entity)
+        public async Task Update(Stewardess entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            var oldEntity = context.Stewardesses.Find(entity.Id);
+
+            var oldEntity = await context.Stewardesses.FindAsync(entity.Id);
             if (oldEntity == null)
             {
                 throw new NotFoundException(nameof(oldEntity));
             }
-            
+
             context.Entry(oldEntity).State = EntityState.Detached;
             context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = context.Stewardesses.Find(id);
+            var entity = await context.Stewardesses.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));
             }
-            
+
             context.Stewardesses.Remove(entity);
         }
     }

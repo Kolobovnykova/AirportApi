@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -20,14 +21,14 @@ namespace BLL.Services
             this.mapper = mapper;
         }
 
-        public TicketDTO GetById(int id)
+        public async Task<TicketDTO> GetById(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            var item = mapper.Map<Ticket, TicketDTO>(unitOfWork.TicketRepository.Get(id));
+            var item = mapper.Map<Ticket, TicketDTO>(await unitOfWork.TicketRepository.Get(id));
 
             if (item == null)
             {
@@ -37,44 +38,44 @@ namespace BLL.Services
             return item;
         }
 
-        public List<TicketDTO> GetAll()
+        public async Task<List<TicketDTO>> GetAll()
         {
-            return mapper.Map<List<Ticket>, List<TicketDTO>>(unitOfWork.TicketRepository.GetAll());
+            return mapper.Map<List<Ticket>, List<TicketDTO>>(await unitOfWork.TicketRepository.GetAll());
         }
 
-        public void Add(TicketDTO entity)
-        {
-            if (entity.FlightId == 0)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            unitOfWork.TicketRepository.Create(mapper.Map<TicketDTO, Ticket>(entity));
-        }
-
-        public void Update(TicketDTO entity)
+        public async Task Add(TicketDTO entity)
         {
             if (entity.FlightId == 0)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.TicketRepository.Update(mapper.Map<TicketDTO, Ticket>(entity));
+            await unitOfWork.TicketRepository.Create(mapper.Map<TicketDTO, Ticket>(entity));
         }
 
-        public void Remove(int id)
+        public async Task Update(TicketDTO entity)
+        {
+            if (entity.FlightId == 0)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await unitOfWork.TicketRepository.Update(mapper.Map<TicketDTO, Ticket>(entity));
+        }
+
+        public async Task Remove(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            unitOfWork.TicketRepository.Delete(id);
+            await unitOfWork.TicketRepository.Delete(id);
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            unitOfWork.SaveChanges();
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }
