@@ -46,6 +46,7 @@ namespace AirportApi
             services.AddScoped<IService<StewardessDTO>, StewardessService>();
             services.AddScoped<IService<TicketDTO>, TicketService>();
             services.AddScoped<IMapper>(m => MapperConfigurations.GetMapper().CreateMapper());
+            services.AddCors();
 
             services.AddDbContext<AirportContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringAirportDb"),
@@ -59,6 +60,9 @@ namespace AirportApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyHeader()
+                .AllowAnyMethod());
 
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
