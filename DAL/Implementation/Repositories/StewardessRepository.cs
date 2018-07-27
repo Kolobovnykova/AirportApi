@@ -45,14 +45,18 @@ namespace DAL.Implementation.Repositories
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var oldEntity = await context.Stewardesses.FindAsync(entity.Id);
-            if (oldEntity == null)
+            Stewardess temp = await context.Stewardesses.FindAsync(entity.Id);
+            if (temp != null)
             {
-                throw new NotFoundException(nameof(oldEntity));
-            }
 
-            context.Entry(oldEntity).State = EntityState.Detached;
-            context.Entry(entity).State = EntityState.Modified;
+                temp.FirstName = entity.FirstName;
+                temp.LastName = entity.LastName;
+                temp.DateOfBirth = entity.DateOfBirth;
+                temp.CrewId = entity.CrewId;
+
+                context.Stewardesses.Update(temp);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task Delete(int id)
