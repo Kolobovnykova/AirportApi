@@ -63,16 +63,16 @@ namespace DAL.Implementation.Repositories
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            var oldEntity = await context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses)
-                .FirstOrDefaultAsync(c => c.Id == entity.Id);
-            if (oldEntity == null)
+
+            Crew temp = await context.Crews.FindAsync(entity.Id);
+            if (temp != null)
             {
-                throw new NotFoundException(nameof(oldEntity));
+                temp.Pilot = entity.Pilot;
+                temp.Stewardesses = entity.Stewardesses;
+
+                context.Crews.Update(temp);
+                await context.SaveChangesAsync();
             }
-            
-            context.Entry(oldEntity).State = EntityState.Detached;
-            context.Entry(entity).State = EntityState.Modified;
         }
 
         public async Task Delete(int id)
