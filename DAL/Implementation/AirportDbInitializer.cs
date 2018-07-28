@@ -31,6 +31,34 @@ namespace DAL.Implementation
                     LastName = "Petrov",
                     DateOfBirth = new DateTime(1980, 06, 12),
                     Experience = 3
+                },
+                new Pilot
+                {
+                    FirstName = "Fritz",
+                    LastName = "Kling",
+                    DateOfBirth = new DateTime(1987, 06, 12),
+                    Experience = 20
+                },
+                new Pilot
+                {
+                    FirstName = "Marshall",
+                    LastName = "Padberg",
+                    DateOfBirth = new DateTime(1988, 06, 12),
+                    Experience = 10
+                },
+                new Pilot
+                {
+                    FirstName = "Bartholome",
+                    LastName = "Lockman",
+                    DateOfBirth = new DateTime(1988, 06, 12),
+                    Experience = 5
+                },
+                new Pilot
+                {
+                    FirstName = "Rodrigo",
+                    LastName = "Flatley",
+                    DateOfBirth = new DateTime(1988, 06, 12),
+                    Experience = 12
                 }
             };
 
@@ -52,6 +80,54 @@ namespace DAL.Implementation
                 {
                     FirstName = "Violetta",
                     LastName = "Sidorova",
+                    DateOfBirth = new DateTime(1980, 11, 10)
+                },
+                new Stewardess
+                {
+                    FirstName = "Una",
+                    LastName = "Cole",
+                    DateOfBirth = new DateTime(1998, 10, 05)
+                },
+                new Stewardess
+                {
+                    FirstName = "Dejah",
+                    LastName = "Homenick",
+                    DateOfBirth = new DateTime(1980, 11, 10)
+                },
+                new Stewardess
+                {
+                    FirstName = "Donnie",
+                    LastName = "Sanford",
+                    DateOfBirth = new DateTime(1998, 10, 05)
+                },
+                new Stewardess
+                {
+                    FirstName = "Lia",
+                    LastName = "Effertz",
+                    DateOfBirth = new DateTime(1980, 11, 10)
+                },
+                new Stewardess
+                {
+                    FirstName = "Annie",
+                    LastName = "Howe",
+                    DateOfBirth = new DateTime(1998, 10, 05)
+                },
+                new Stewardess
+                {
+                    FirstName = "Ellis",
+                    LastName = "Adams",
+                    DateOfBirth = new DateTime(1980, 11, 10)
+                },
+                new Stewardess
+                {
+                    FirstName = "Harmon",
+                    LastName = "Yost",
+                    DateOfBirth = new DateTime(1998, 10, 05)
+                },
+                new Stewardess
+                {
+                    FirstName = "Alyson",
+                    LastName = "Koelpin",
                     DateOfBirth = new DateTime(1980, 11, 10)
                 },
                 new Stewardess
@@ -79,6 +155,42 @@ namespace DAL.Implementation
                     {
                         stewardesses[2],
                         stewardesses[3]
+                    }
+                },
+                new Crew
+                {
+                    Pilot = pilots[2],
+                    Stewardesses = new List<Stewardess>
+                    {
+                        stewardesses[4],
+                        stewardesses[5]
+                    }
+                },
+                new Crew
+                {
+                    Pilot = pilots[3],
+                    Stewardesses = new List<Stewardess>
+                    {
+                        stewardesses[6],
+                        stewardesses[7]
+                    }
+                },
+                new Crew
+                {
+                    Pilot = pilots[4],
+                    Stewardesses = new List<Stewardess>
+                    {
+                        stewardesses[8],
+                        stewardesses[9]
+                    }
+                },
+                new Crew
+                {
+                    Pilot = pilots[5],
+                    Stewardesses = new List<Stewardess>
+                    {
+                        stewardesses[10],
+                        stewardesses[11]
                     }
                 }
             };
@@ -108,6 +220,26 @@ namespace DAL.Implementation
                 {
                     FlightId = 2,
                     Price = 35
+                },
+                new Ticket
+                {
+                    FlightId = 3,
+                    Price = 23
+                },
+                new Ticket
+                {
+                    FlightId = 3,
+                    Price = 45
+                },
+                new Ticket
+                {
+                    FlightId = 4,
+                    Price = 35
+                },
+                new Ticket
+                {
+                    FlightId = 4,
+                    Price = 35
                 }
             };
 
@@ -120,19 +252,36 @@ namespace DAL.Implementation
                     Model = "Type 1",
                     CarryingCapacity = 1000,
                     MaxAltitude = 2000,
-                    MaxRange = 10000,
+                    MaxRange = 11000,
                     MaxSpeed = 1200,
-                    NumberOfSeats = 100
+                    NumberOfSeats = 90
                 },
-
                 new PlaneType
                 {
                     Model = "Type 2",
-                    CarryingCapacity = 1000,
-                    MaxAltitude = 2000,
+                    CarryingCapacity = 1100,
+                    MaxAltitude = 1900,
                     MaxRange = 10000,
                     MaxSpeed = 1200,
-                    NumberOfSeats = 100
+                    NumberOfSeats = 110
+                },
+                new PlaneType
+                {
+                    Model = "Type 3",
+                    CarryingCapacity = 700,
+                    MaxAltitude = 1800,
+                    MaxRange = 12000,
+                    MaxSpeed = 1400,
+                    NumberOfSeats = 200
+                },
+                new PlaneType
+                {
+                    Model = "Type 4",
+                    CarryingCapacity = 8000,
+                    MaxAltitude = 1500,
+                    MaxRange = 9000,
+                    MaxSpeed = 900,
+                    NumberOfSeats = 150
                 }
             };
 
@@ -150,9 +299,23 @@ namespace DAL.Implementation
                 new Plane
                 {
                     DateOfRelease = new DateTime(2016, 12, 1),
-                    Lifetime = 10,
+                    Lifetime = 14,
                     Name = "Plane 2",
                     PlaneType = planeTypes[1]
+                },
+                new Plane
+                {
+                    DateOfRelease = new DateTime(2016, 12, 1),
+                    Lifetime = 13,
+                    Name = "Plane 3",
+                    PlaneType = planeTypes[2]
+                },
+                new Plane
+                {
+                    DateOfRelease = new DateTime(2016, 12, 1),
+                    Lifetime = 12,
+                    Name = "Plane 4",
+                    PlaneType = planeTypes[3]
                 }
             };
 
@@ -183,6 +346,30 @@ namespace DAL.Implementation
                         tickets[2],
                         tickets[3]
                     }
+                },
+                new Flight
+                {
+                    DateOfArrival = new DateTime(2018, 10, 5, 4, 5, 0),
+                    DateOfDeparture = new DateTime(2018, 10, 5, 6, 5, 0),
+                    PointOfDeparture = "Paris",
+                    Destination = "Amsterdam",
+                    Tickets = new List<Ticket>
+                    {
+                        tickets[4],
+                        tickets[5]
+                    }
+                },
+                new Flight
+                {
+                    DateOfArrival = new DateTime(2018, 10, 5, 4, 5, 0),
+                    DateOfDeparture = new DateTime(2018, 10, 5, 6, 5, 0),
+                    PointOfDeparture = "Madrid",
+                    Destination = "Oslo",
+                    Tickets = new List<Ticket>
+                    {
+                        tickets[6],
+                        tickets[7]
+                    }
                 }
             };
 
@@ -203,6 +390,48 @@ namespace DAL.Implementation
                     Flight = flights[1],
                     DateOfDeparture = new DateTime(2018, 10, 5, 8, 16, 0),
                     Plane = planes[1]
+                },
+                new Departure
+                {
+                    Crew = crews[2],
+                    Flight = flights[2],
+                    DateOfDeparture = new DateTime(2017, 10, 5, 8, 16, 0),
+                    Plane = planes[2]
+                },
+                new Departure
+                {
+                    Crew = crews[3],
+                    Flight = flights[3],
+                    DateOfDeparture = new DateTime(2018, 10, 5, 8, 16, 0),
+                    Plane = planes[3]
+                },
+                new Departure
+                {
+                    Crew = crews[1],
+                    Flight = flights[1],
+                    DateOfDeparture = new DateTime(2018, 10, 5, 8, 16, 0),
+                    Plane = planes[1]
+                },
+                new Departure
+                {
+                    Crew = crews[0],
+                    Flight = flights[0],
+                    DateOfDeparture = new DateTime(2018, 10, 5, 8, 16, 0),
+                    Plane = planes[0]
+                },
+                new Departure
+                {
+                    Crew = crews[2],
+                    Flight = flights[2],
+                    DateOfDeparture = new DateTime(2018, 10, 5, 8, 16, 0),
+                    Plane = planes[2]
+                },
+                new Departure
+                {
+                    Crew = crews[3],
+                    Flight = flights[3],
+                    DateOfDeparture = new DateTime(2018, 10, 5, 8, 16, 0),
+                    Plane = planes[3]
                 }
             };
 
