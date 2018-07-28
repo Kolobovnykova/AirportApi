@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
@@ -11,27 +13,27 @@ namespace AirportApi.Controllers
     [Route("api/crews")]
     public class CrewController : Controller
     {
-        private readonly IService<CrewDTO> service;
+        private readonly ICrewService service;
 
-        public CrewController(IService<CrewDTO> service)
+        public CrewController(ICrewService service)
         {
             this.service = service;
         }
 
         //GET: api/crews/
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Json(service.GetAll());
+            return Json(await service.GetAll());
         }
 
         //GET: api/crews/id
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var item = service.GetById(id);
+                var item = await service.GetById(id);
                 return Ok(item);
             }
             catch (ValidationException e)
@@ -44,9 +46,22 @@ namespace AirportApi.Controllers
             }
         }
 
+        [HttpGet("firstTen")]
+        public async Task<IActionResult> GetFirstTen()
+        {
+            try
+            {
+                return Ok(await service.LoadTenCrews());
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         // [Route("api/crews/")]
-        public IActionResult Create([FromBody] CrewDTO item)
+        public async Task<IActionResult> Create([FromBody] CrewDTO item)
         {
             if (!ModelState.IsValid)
             {
@@ -55,8 +70,8 @@ namespace AirportApi.Controllers
 
             try
             {
-                service.Add(item);
-                service.SaveChanges();
+                await service.Add(item);
+                await service.SaveChanges();
                 return Ok(item);
             }
             catch (Exception)
@@ -66,7 +81,7 @@ namespace AirportApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] CrewDTO item)
+        public async Task<IActionResult> Update(int id, [FromBody] CrewDTO item)
         {
             if (!ModelState.IsValid)
             {
@@ -76,9 +91,9 @@ namespace AirportApi.Controllers
             try
             {
                 item.Id = id;
-                service.GetById(id);
-                service.Update(item);
-                service.SaveChanges();
+                await service.GetById(id);
+                await service.Update(item);
+                await service.SaveChanges();
                 return Ok(item);
             }
             catch (NotFoundException e)
@@ -92,13 +107,13 @@ namespace AirportApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var item = service.GetById(id);
-                service.Remove(id);
-                service.SaveChanges();
+                var item = await service.GetById(id);
+                await service.Remove(id);
+                await service.SaveChanges();
                 return Ok(item);
             }
             catch (NotFoundException e)

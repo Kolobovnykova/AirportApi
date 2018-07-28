@@ -15,7 +15,7 @@ namespace DAL.Implementation
         }
         
         IRepository<Pilot> pilotRepository;
-        IRepository<Crew> crewRepository;
+        ICrewRepository crewRepository;
         IRepository<Plane> planeRepository;
         IRepository<Flight> flightRepository;
         IRepository<Ticket>  ticketRepository;
@@ -29,7 +29,7 @@ namespace DAL.Implementation
             set => flightRepository = value;
         }
 
-        public IRepository<Crew> CrewRepository
+        public ICrewRepository CrewRepository
         {
             get => crewRepository ?? (crewRepository = new CrewRepository(context));
             set => crewRepository = value;
@@ -81,9 +81,9 @@ namespace DAL.Implementation
             context.SaveChanges();
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            return context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void DropDb()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -20,14 +21,14 @@ namespace BLL.Services
             this.mapper = mapper;
         }
 
-        public StewardessDTO GetById(int id)
+        public async Task<StewardessDTO> GetById(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            var item = mapper.Map<Stewardess, StewardessDTO>(unitOfWork.StewardessRepository.Get(id));
+            var item = mapper.Map<Stewardess, StewardessDTO>(await unitOfWork.StewardessRepository.Get(id));
 
             if (item == null)
             {
@@ -37,44 +38,44 @@ namespace BLL.Services
             return item;
         }
 
-        public List<StewardessDTO> GetAll()
+        public async Task<List<StewardessDTO>> GetAll()
         {
-            return mapper.Map<List<Stewardess>, List<StewardessDTO>>(unitOfWork.StewardessRepository.GetAll());
+            return mapper.Map<List<Stewardess>, List<StewardessDTO>>(await unitOfWork.StewardessRepository.GetAll());
         }
 
-        public void Add(StewardessDTO entity)
-        {
-            if (entity.FirstName == null || entity.LastName == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            unitOfWork.StewardessRepository.Create(mapper.Map<StewardessDTO, Stewardess>(entity));
-        }
-
-        public void Update(StewardessDTO entity)
+        public async Task Add(StewardessDTO entity)
         {
             if (entity.FirstName == null || entity.LastName == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.StewardessRepository.Update(mapper.Map<StewardessDTO, Stewardess>(entity));
+            await unitOfWork.StewardessRepository.Create(mapper.Map<StewardessDTO, Stewardess>(entity));
         }
 
-        public void Remove(int id)
+        public async Task Update(StewardessDTO entity)
+        {
+            if (entity.FirstName == null || entity.LastName == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await unitOfWork.StewardessRepository.Update(mapper.Map<StewardessDTO, Stewardess>(entity));
+        }
+
+        public async Task Remove(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            unitOfWork.StewardessRepository.Delete(id);
+            await unitOfWork.StewardessRepository.Delete(id);
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            unitOfWork.SaveChanges();
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

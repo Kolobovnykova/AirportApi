@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -20,14 +21,14 @@ namespace BLL.Services
             this.mapper = mapper;
         }
 
-        public PilotDTO GetById(int id)
+        public async Task<PilotDTO> GetById(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            var item = mapper.Map<Pilot, PilotDTO>(unitOfWork.PilotRepository.Get(id));
+            var item = mapper.Map<Pilot, PilotDTO>(await unitOfWork.PilotRepository.Get(id));
 
             if (item == null)
             {
@@ -37,44 +38,44 @@ namespace BLL.Services
             return item;
         }
 
-        public List<PilotDTO> GetAll()
+        public async Task<List<PilotDTO>> GetAll()
         {
-            return mapper.Map<List<Pilot>, List<PilotDTO>>(unitOfWork.PilotRepository.GetAll());
+            return mapper.Map<List<Pilot>, List<PilotDTO>>(await unitOfWork.PilotRepository.GetAll());
         }
 
-        public void Add(PilotDTO entity)
-        {
-            if (entity.FirstName == null || entity.LastName == null || entity.DateOfBirth == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            unitOfWork.PilotRepository.Create(mapper.Map<PilotDTO, Pilot>(entity));
-        }
-
-        public void Update(PilotDTO entity)
+        public async Task Add(PilotDTO entity)
         {
             if (entity.FirstName == null || entity.LastName == null || entity.DateOfBirth == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            unitOfWork.PilotRepository.Update(mapper.Map<PilotDTO, Pilot>(entity));
+            await unitOfWork.PilotRepository.Create(mapper.Map<PilotDTO, Pilot>(entity));
         }
 
-        public void Remove(int id)
+        public async Task Update(PilotDTO entity)
+        {
+            if (entity.FirstName == null || entity.LastName == null || entity.DateOfBirth == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await unitOfWork.PilotRepository.Update(mapper.Map<PilotDTO, Pilot>(entity));
+        }
+
+        public async Task Remove(int id)
         {
             if (id < 0)
             {
                 throw new ArgumentException();
             }
             
-            unitOfWork.PilotRepository.Delete(id);
+            await unitOfWork.PilotRepository.Delete(id);
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            unitOfWork.SaveChanges();
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

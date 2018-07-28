@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using Shared.Exceptions;
 
 namespace DAL.Implementation.Repositories
 {
-    public class CrewRepository : IRepository<Crew>
+    public class CrewRepository : ICrewRepository
     {
         private readonly AirportContext context;
 
@@ -17,49 +18,66 @@ namespace DAL.Implementation.Repositories
             this.context = context;
         }
 
-        public List<Crew> GetAll()
+        public async Task<List<Crew>> GetAll()
         {
-            var query = context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses);
-
-            return query.ToList();
+            return await context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses).ToListAsync();
         }
 
-        public Crew Get(int id)
+        public async Task<Crew> Get(int id)
         {
-            return context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses).FirstOrDefault(c => c.Id == id);
+            return await context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public void Create(Crew entity)
+        public async Task Create(Crew entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             
-            context.Crews.Add(entity);
+            await context.Crews.AddAsync(entity);
         }
-
-        public void Update(Crew entity)
+        
+        public async Task CreateRange(List<Crew> entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            
-            var oldEntity = context.Crews.Include(c => c.Pilot).Include(c => c.Stewardesses)
-                .FirstOrDefault(c => c.Id == entity.Id);
-            if (oldEntity == null)
+
+            foreach (var e in entity)
             {
-                throw new NotFoundException(nameof(oldEntity));
+                if (e.Id > 0)
+                {
+                    e.Id = 0;
+                }
             }
             
-            context.Entry(oldEntity).State = EntityState.Detached;
-            context.Entry(entity).State = EntityState.Modified;
+            await context.Crews.AddRangeAsync(entity);
         }
 
-        public void Delete(int id)
+        public async Task Update(Crew entity)
         {
-            var entity = context.Crews.Find(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            Crew temp = await context.Crews.FindAsync(entity.Id);
+            if (temp != null)
+            {
+                temp.Pilot = entity.Pilot;
+                temp.Stewardesses = entity.Stewardesses;
+
+                context.Crews.Update(temp);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task Delete(int id)
+        {
+            var entity = await context.Crews.FindAsync(id);
             if (entity == null)
             {
                 throw new NotFoundException(nameof(entity));

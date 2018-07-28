@@ -5,7 +5,7 @@ namespace DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IRepository<Crew> CrewRepository { get; set; }
+        ICrewRepository CrewRepository { get; set; }
         IRepository<Plane> PlaneRepository { get; set; }
         IRepository<PlaneType> PlaneTypeRepository { get; set; }
         IRepository<Flight> FlightRepository { get; set; }
@@ -16,6 +16,6 @@ namespace DAL.Interfaces
         void Seed();
         void DropDb();
         void SaveChanges();
-        Task<int> SaveChangesAsync();
+        Task SaveChangesAsync();
     }
 }

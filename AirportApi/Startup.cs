@@ -31,7 +31,7 @@ namespace AirportApi
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRepository<Plane>, PlaneRepository>();
             services.AddScoped<IRepository<PlaneType>, PlaneTypeRepository>();
-            services.AddScoped<IRepository<Crew>, CrewRepository>();
+            services.AddScoped<ICrewRepository, CrewRepository>();
             services.AddScoped<IRepository<Departure>, DepartureRepository>();
             services.AddScoped<IRepository<Flight>, FlightRepository>();
             services.AddScoped<IRepository<Pilot>, PilotRepository>();
@@ -39,13 +39,14 @@ namespace AirportApi
             services.AddScoped<IRepository<Ticket>, TicketRepository>();
             services.AddScoped<IService<PlaneDTO>, PlaneService>();
             services.AddScoped<IService<PlaneTypeDTO>, PlaneTypeService>();
-            services.AddScoped<IService<CrewDTO>, CrewService>();
+            services.AddScoped<ICrewService, CrewService>();
             services.AddScoped<IService<DepartureDTO>, DepartureService>();
             services.AddScoped<IService<FlightDTO>, FlightService>();
             services.AddScoped<IService<PilotDTO>, PilotService>();
             services.AddScoped<IService<StewardessDTO>, StewardessService>();
             services.AddScoped<IService<TicketDTO>, TicketService>();
             services.AddScoped<IMapper>(m => MapperConfigurations.GetMapper().CreateMapper());
+            services.AddCors();
 
             services.AddDbContext<AirportContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringAirportDb"),
@@ -59,6 +60,9 @@ namespace AirportApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyHeader()
+                .AllowAnyMethod());
 
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {

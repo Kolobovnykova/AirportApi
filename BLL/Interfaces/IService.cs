@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
     public interface IService<T>
     {
-        List<T> GetAll();
+        Task<List<T>> GetAll();
 
-        T GetById(int id);
+        Task<T> GetById(int id);
 
-        void Add(T entity);
+        Task Add(T entity);
 
-        void Update(T entity);
+        Task Update(T entity);
 
-        void Remove(int id);
+        Task Remove(int id);
 
-        void SaveChanges();
+        Task SaveChanges();
     }
 }
