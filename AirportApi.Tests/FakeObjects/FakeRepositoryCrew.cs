@@ -8,35 +8,35 @@ using Shared.Exceptions;
 
 namespace AirportApi.Tests.FakeObjects
 {
-    public class FakeRepository<T> : IRepository<T> where T : Entity
+    public class FakeRepositoryCrew : ICrewRepository
     {
-        public List<T> Data;
+        public List<Crew> Data;
 
-        public FakeRepository()
+        public FakeRepositoryCrew()
         {
         }
 
-        public FakeRepository(List<T> data)
+        public FakeRepositoryCrew(List<Crew> data)
         {
             Data = data;
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<List<Crew>> GetAll()
         {
             return Data;
         }
 
-        public async Task<T> Get(int id)
+        public async Task<Crew> Get(int id)
         {
             return Data.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task Create(T entity)
+        public async Task Create(Crew entity)
         {
             Data.Add(entity);
         }
 
-        public async Task Update(T entity)
+        public async Task Update(Crew entity)
         {
             if (entity == null)
             {
@@ -61,6 +61,11 @@ namespace AirportApi.Tests.FakeObjects
             }
 
             Data.Remove(entity);
+        }
+
+        public Task CreateRange(List<Crew> entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
