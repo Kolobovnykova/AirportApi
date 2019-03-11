@@ -1,6 +1,8 @@
 # AirportApi
 
+1. Clone and run the solution
 
+2. Use via Postman (https://www.getpostman.com/) with the following endpoints:
 
 ## Endpoints API
 Type |         Method        
